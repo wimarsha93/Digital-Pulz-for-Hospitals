@@ -23,8 +23,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <link href="<?php echo base_url('public/dist/css/skins/_all-skins.min.css') ?>" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" type="text/css" href="<?php echo base_url('public/plugins/datepicker/datepicker3.css'); ?>">
         <link rel="stylesheet" type="text/css" href="<?php echo base_url('public/plugins/datatables/dataTables.bootstrap.css'); ?>">
-        
-         
+
         
         <!--custom css added to panel slider-->        
       
@@ -37,7 +36,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
        
        <!--to load search function this must be needed-->
         <script src="<?= base_url('/Bootstrap/js/jquery-1.9.1.min.js'); ?>"></script>
-
+        <script src="<?= base_url('/Bootstrap/js/bootstrap-checkbox.min.js'); ?>"></script>
     <!--<script src="<?= base_url('/Bootstrap/js/jquery-1.11.1.min.js'); ?>"></script>-->
     
     <!--<script src="<?= base_url('/Bootstrap/js/bootstrap.min.js'); ?>"></script>

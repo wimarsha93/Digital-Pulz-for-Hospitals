@@ -14,26 +14,44 @@
 	document.getElementsByClassName('patient_prof')[0].className = 'patient_prof active';
 </script>
 
-<!--<script
-	src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
-<script type="text/javascript">
-				function initialize() {
-					var input = document.getElementById('address');
-//					var options = {componentRestrictions: {country: 'SL'}};
-					new google.maps.places.Autocomplete(input);
-				}
-             
-				google.maps.event.addDomListener(window, 'load', initialize);
-			</script>-->
 <script>
     
 
     $(document).ready(function() {
 
-    	$('#btnCloseGuardian').click(function(){
+    	//add guardians to the temp table
+    	$('#btnGuardianAdd').click(function(){
     		$('#guardianList').prop('hidden', false);
 
-    	})
+    		var nic = $('#guardianNIC').val();
+    		var gFirstName = $('#guardianFirstname').val();
+    		var gLastName = $('#guardianLastname').val();
+    		var gGender = $('#guardianGender').val();
+    		var gRealtionship = $('#guardianRelationship').val();
+
+    		var guardianAppend = '<tr><td>'+nic+'</td><td>' + gFirstName + '</td><td>' + gLastName + '</td><td>' + gGender + '</td><td>' 
+    		+ gRealtionship + '</td><td><input type="checkbox" name="record"></button></td></tr>';
+
+    		$('#tableGuardians tbody').append(guardianAppend);
+
+    		$('#guardianNIC').val("");
+    		$('#guardianFirstname').val("");
+    		$('#guardianLastname').val("");
+    	});
+
+    	// Find and remove selected table rows
+        $("#btnDeleteGuardian").click(function(){
+            $("#tableGuardians tbody").find('input[name="record"]').each(function(){
+            	if($(this).is(":checked")){
+                    $(this).parents("tr").remove();
+                }
+            });
+
+            if($('#tableGuardians tbody tr').length == 0)
+            {
+            	$('#guardianList').prop('hidden', true);
+            }
+        });
 
         $("#fullname").keypress(function(event) {
             if ((event.which > 47 && event.which < 58))
@@ -42,12 +60,27 @@
             }
         });
 
+        //Check box toggle to enable and disable the add guardians
         $('#checkboxGuardian').click(function(){
             	if($(this).prop("checked") == true){
                 	$('#btnAddGuardian').prop('disabled', false);
             	}
             	else if($(this).prop("checked") == false){
-                	$('#btnAddGuardian').prop('disabled', true);
+            		if($('#tableGuardians tbody tr').length >= 0)
+            		{
+	            		var result = confirm("Guardian list contain data, Do you want to remove them?");
+						if (result == true) {
+						   $("#tableGuardians tbody").find('input[name="record"]').each(function(){
+                    			$(this).parents("tr").remove();
+            				});
+
+						   $('#btnAddGuardian').prop('disabled', true);
+						   $('#guardianList').prop('hidden', true);
+						} else {
+						    
+						}
+					}
+                	
             	}
         });
 
@@ -969,7 +1002,7 @@ if (preg_match ( '/Edit/', $title )) {
 						<div class="col-xs-3">
 							<div class="input-group" >
 								<span class="input-group-addon" >Mobile</span><input
-									class="form-control" id="emergencyaddress2" name="address 2"
+									class="form-control" id="emergencyMobile" name="emergency Mobile"
 									value="<?php
 									
 									if (preg_match ( '/Edit/', $title )) {
@@ -982,7 +1015,7 @@ if (preg_match ( '/Edit/', $title )) {
 						<div class="col-xs-3">
 							<div class="input-group" >
 								<span class="input-group-addon" >Telephone</span><input
-									class="form-control" id="emergencyaddress3" name="address 3"
+									class="form-control" id="emergencyTelephone" name="emergency Telephone"
 									value="<?php
 									
 									if (preg_match ( '/Edit/', $title )) {
@@ -1042,7 +1075,7 @@ if (preg_match ( '/Edit/', $title )) {
 						<div class="col-xs-3">
 							<div class="input-group" >
 								<span class="input-group-addon" >City <span style="color:red">*</span></span><input
-									class="form-control" id="emergencycity" name="city"
+									class="form-control" id="emergencycity" name="emergencycity"
 									value="<?php
 									
 									if (preg_match ( '/Edit/', $title )) {
@@ -1058,7 +1091,7 @@ if (preg_match ( '/Edit/', $title )) {
 						<div class="col-xs-3">
 							<div class="input-group" >
 								<span class="input-group-addon" >Postal Code</span><input
-									class="form-control" id="emergencypostalCode" name="postalCode"
+									class="form-control" id="emergencypostalCode" name="emergencypostalCode"
 									value="<?php
 									
 									if (preg_match ( '/Edit/', $title )) {
@@ -1085,16 +1118,16 @@ if (preg_match ( '/Edit/', $title )) {
 							<div class="box">
 								<div class="box-body">
 									<table class="table table-bordered table-striped table-hover"
-										id="tabletestp">
+										id="tableGuardians">
 										<br>
 										<thead>
 											<tr>
-												<th width="25px">#</th>
 												<th>NIC</th>
 												<th>First Name</th>
 												<th>Last Name</th>
 												<th>Gender</th>
 												<th>Relationship</th>
+												<th>Select</th>
 											</tr>
 
 										</thead>
@@ -1104,6 +1137,11 @@ if (preg_match ( '/Edit/', $title )) {
 
 									</table>
 								</div>
+							</div>
+							<br/>
+							<div class="input-group">
+								<button type="button" id="btnDeleteGuardian" class="btn btn-primary">Delete Guardians
+								</button>
 							</div>
 						</div>
 					</div>
@@ -1121,8 +1159,8 @@ if (preg_match ( '/Edit/', $title )) {
 			        					<div class="col-xs-6">
 											<div class="input-group" >
 												<span class="input-group-addon" >NIC <span style="color:red">*</span></span><input
-													class="form-control" id="emergencyaddress2" name="address 2"
-													value="" />
+													class="form-control" id="guardianNIC" name="guardian NIC"
+													value=""/>
 											</div>
 
 										</div>
@@ -1134,16 +1172,16 @@ if (preg_match ( '/Edit/', $title )) {
 									<div class="row">
 										<div class="col-xs-6">
 											<div class="input-group" >
-												<span class="input-group-addon" >First Name</span></span><input
-													class="form-control" id="guardianfirstname" name="guardianfirstname"
+												<span class="input-group-addon" >First Name <span style="color:red">*</span></span><input
+													class="form-control" id="guardianFirstname" name="guardian firstname"
 													value="" />
 											</div>
 
 										</div>
 										<div class="col-xs-6">
 											<div class="input-group" >
-												<span class="input-group-addon">Last Name</span></span><input type="text"
-													class="form-control" id="guardianlastname" name="guardianlastname"
+												<span class="input-group-addon">Last Name <span style="color:red">*</span></span><input type="text"
+													class="form-control" id="guardianLastname" name="guardian lastname"
 													value="">
 											</div>
 
@@ -1154,7 +1192,7 @@ if (preg_match ( '/Edit/', $title )) {
 			        					<div class="col-xs-6">
 											<div class="input-group" >
 												<span class="input-group-addon" >Gender <span style="color:red">*</span></span> <select
-													class="form-control" id="gender" name="gender"
+													class="form-control" id="guardianGender" name="guardian Gender"
 													required="required">
 													<option class="" value="Male">Male</option>
 													<option class="" value="Female">Female</option>
@@ -1165,7 +1203,7 @@ if (preg_match ( '/Edit/', $title )) {
 										<div class="col-xs-6">
 											<div class="input-group" >
 												<span class="input-group-addon" >Relationship <span style="color:red">*</span></span> <select
-													class="form-control" id="gender" name="gender"
+													class="form-control" id="guardianRelationship" name="guardian Relationship"
 													required="required">
 													<option class="" value="Male">Father</option>
 													<option class="" value="Female">Mother</option>

@@ -180,9 +180,9 @@ class PatientModel {
 		return $response;
 	}
 
-	public function jsonSearializeGuardian($nic,$fname,$lname,$gender,$relationship)
+	public function jsonSearializeGuardian($array)
 	{
-		$this->guardianlist[] = array( "guardiannic" => $nic, "guardianfname" => $fname, "guardianlname" => $lname, "guardiangender" => $gender, "guardianrelationship" => $relationship);
+		$this->guardianlist[] = $array;
 
 	}
 	 

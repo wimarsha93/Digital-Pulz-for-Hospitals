@@ -158,16 +158,28 @@ session_start();
 					$this->patient->set_remarks($this->input->post('remarks'));
 					$this->patient->set_userid( $this->session->userdata("userid"));
 
-
-					//$guardians = array();
 					for($i = 0; $i< $this->input->post('gtablerows'); $i++)
     				{
-    					$this->patient->jsonSearializeGuardian($this->input->post('tableguardianNIC')[$i], $this->input->post('tableguardianFirstname')[$i], $this->input->post('tableguardianLastname')[$i], $this->input->post('tableguardianGender')[$i],$this->input->post('tableguardianRelationship')[$i]);
-    						//array_push($guardians, array( "guardiannic" => $this->input->post('guardianNIC')[$i], "guardianfname" => $this->input->post('guardianFname')[$i]));
-    					
+    					$this->load->model('GuardianModel','guardian');
 
+
+    					$this->guardian->set_nic($this->input->post('tableguardianNIC')[$i]);
+						$this->guardian->set_fname($this->input->post('tableguardianFirstname')[$i]);
+						$this->guardian->set_lname($this->input->post('tableguardianLastname')[$i]);
+						$this->guardian->set_gender($this->input->post('tableguardianGender')[$i]);
+						$this->guardian->set_relationship($this->input->post('tableguardianRelationship')[$i]);
+						$this->guardian->set_address1($this->input->post('tableguardianAddress1')[$i]);
+						$this->guardian->set_address2($this->input->post('tableguardianAddress2')[$i]);
+						$this->guardian->set_address3($this->input->post('tableguardianAddress3')[$i]);
+						$this->guardian->set_city($this->input->post('tableguardianCity')[$i]);
+						$this->guardian->set_postalcode($this->input->post('tableguardianPostalCode')[$i]);	
+						$this->guardian->set_mobile($this->input->post('tableguardianMobile')[$i]);
+						$this->guardian->set_telephone($this->input->post('tableguardianTelephone')[$i]);
+
+    					$this->patient->jsonSearializeGuardian($this->guardian->jsonSerialize());
+    					
 					}
-					//$this->patient->set_guardianlist($guardians);
+
 
 					$data['status'] =  json_decode( $this->patient->addPatient());
 				 
@@ -255,14 +267,25 @@ session_start();
 				$this->patient->set_remarks($this->input->post('remarks'));
 				$this->patient->set_userid( $this->session->userdata("userid"));
 
-
-				//$guardians = array();
 				for($i = 0; $i< $this->input->post('gtablerows'); $i++)
 				{
-					$this->patient->jsonSearializeGuardian($this->input->post('tableguardianNIC')[$i], $this->input->post('tableguardianFirstname')[$i], $this->input->post('tableguardianLastname')[$i], $this->input->post('tableguardianGender')[$i],$this->input->post('tableguardianRelationship')[$i]);
-						//array_push($guardians, array( "guardiannic" => $this->input->post('guardianNIC')[$i], "guardianfname" => $this->input->post('guardianFname')[$i]));
-					
+					$this->load->model('GuardianModel','guardian');
 
+
+    					$this->guardian->set_nic($this->input->post('tableguardianNIC')[$i]);
+						$this->guardian->set_fname($this->input->post('tableguardianFirstname')[$i]);
+						$this->guardian->set_lname($this->input->post('tableguardianLastname')[$i]);
+						$this->guardian->set_gender($this->input->post('tableguardianGender')[$i]);
+						$this->guardian->set_relationship($this->input->post('tableguardianRelationship')[$i]);
+						$this->guardian->set_address1($this->input->post('tableguardianAddress1')[$i]);
+						$this->guardian->set_address2($this->input->post('tableguardianAddress2')[$i]);
+						$this->guardian->set_address3($this->input->post('tableguardianAddress3')[$i]);
+						$this->guardian->set_city($this->input->post('tableguardianCity')[$i]);
+						$this->guardian->set_postalcode($this->input->post('tableguardianPostalCode')[$i]);	
+						$this->guardian->set_mobile($this->input->post('tableguardianMobile')[$i]);
+						$this->guardian->set_telephone($this->input->post('tableguardianTelephone')[$i]);
+
+    					$this->patient->jsonSearializeGuardian($this->guardian->jsonSerialize());
 				}
  
 				$data['status'] = $this->patient->updatePatient();

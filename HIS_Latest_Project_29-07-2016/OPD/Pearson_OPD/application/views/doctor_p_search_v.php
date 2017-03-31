@@ -74,18 +74,7 @@
 
                                 </thead>
                                 <tbody>
-                                    <?php $i=0; foreach($patients as $row){ ?>
-                                    <tr
-                                        onClick=<?php $i++; echo "window.location='".base_url()."index.php/patient_visit_c/view/".$row->patient->patientID."/".$row->visitID."'"; ?>>
-                                        <td><?php echo $i; ?></td>
-                                        <td><?php echo $row->patient->patientHIN; ?></td>
-                                        <td><?php   if($row->patient->patientTitle=="Baby" | $row->patient->patientTitle=="Rev") echo  $row->patient->patientTitle." ".$row->patient->patientFullName;else echo $row->patient->patientTitle.$row->patient->patientFullName; ?></td>
-                                        <td><?php echo date('Y-m-d H:i:s a',$row->visitDate/1000);  ?></td>
-                                        <td><?php echo  $row->visitComplaint ;  ?></td>
-
-                                        <td><?php echo (date('Y') - date('Y',strtotime($row->patient->patientDateOfBirth)))."Yrs / ". $row->patient->patientGender." / ".$row->patient->patientCivilStatus." / ".$row->patient->patientAddress ?></td>
-                                    </tr>
-                                    <?php }  ?>
+                                    
                                 </tbody>
 
                             </table>
@@ -118,7 +107,7 @@
             $('#patientDetailsList').prop('hidden', false);
 
             //ajax method for search and filling the table
-            
+
         });
 
 

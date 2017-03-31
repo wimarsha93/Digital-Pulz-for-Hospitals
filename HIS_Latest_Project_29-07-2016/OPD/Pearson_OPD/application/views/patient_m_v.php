@@ -28,12 +28,28 @@
     		var gLastName = $('#guardianLastname').val();
     		var gGender = $('#guardianGender').val();
     		var gRealtionship = $('#guardianRelationship').val();
+            var gAddress1 = $('#guardianAddress1').val();
+            var gAddress2 = $('#guardianAddress2').val();
+            var gAddress3 = $('#guardianAddress3').val();
+            var gCity = $('#guardianCity').val();
+            var gPostalCode = $('#guardianPostalCode').val();
+            var gMobile = $('#guardianMobile').val();
+            var gTelephone = $('#guardianTelephone').val();
 
-    		var guardianAppend = '<tr><td><input class="form-control" type="hidden" name="tableguardianNIC[]" value="'+nic+'" />'+nic+'</td>'+
+    		var guardianAppend = '<tr><td><input type="checkbox" name="record"></button></td>'+
+            '<td><input class="form-control" type="hidden" name="tableguardianNIC[]" value="'+nic+'" />'+nic+'</td>'+
     		'<td><input class="form-control" type="hidden" name="tableguardianFirstname[]" value="'+gFirstName+'" />' + gFirstName + '</td>'+
     		'<td><input class="form-control" type="hidden" name="tableguardianLastname[]" value="'+gLastName+'" />' + gLastName + '</td>'+
     		'<td><input class="form-control" type="hidden" name="tableguardianGender[]" value="'+gGender+'" />' + gGender + '</td>'+
-    		'<td><input class="form-control" type="hidden" name="tableguardianRelationship[]" value="'+gRealtionship+'" />' + gRealtionship + '</td><td><input type="checkbox" name="record"></button></td></tr>';
+    		'<td><input class="form-control" type="hidden" name="tableguardianRelationship[]" value="'+gRealtionship+'" />' + gRealtionship + '</td>'+
+            '<td><input class="form-control" type="hidden" name="tableguardianAddress1[]" value="'+gAddress1+'" />' + gAddress1 + '</td>'+
+            '<td><input class="form-control" type="hidden" name="tableguardianAddress2[]" value="'+gAddress2+'" />' + gAddress2 + '</td>'+
+            '<td><input class="form-control" type="hidden" name="tableguardianAddress3[]" value="'+gAddress3+'" />' + gAddress3 + '</td>'+
+            '<td><input class="form-control" type="hidden" name="tableguardianCity[]" value="'+gCity+'" />' + gCity + '</td>'+
+            '<td><input class="form-control" type="hidden" name="tableguardianPostalCode[]" value="'+gPostalCode+'" />' + gPostalCode + '</td>'+
+            '<td><input class="form-control" type="hidden" name="tableguardianMobile[]" value="'+gMobile+'" />' + gMobile + '</td>'+
+            '<td><input class="form-control" type="hidden" name="tableguardianTelephone[]" value="'+gTelephone+'" />' + gTelephone + '</td>'+
+            '</tr>';
 
     		$('#gtablerows').val($('#tableGuardians tbody tr').length+1);
 
@@ -43,6 +59,13 @@
     		$('#guardianNIC').val("");
     		$('#guardianFirstname').val("");
     		$('#guardianLastname').val("");
+            $('#guardianAddress1').val("");
+            $('#guardianAddress2').val("");
+            $('#guardianAddress3').val("");
+            $('#guardianCity').val("");
+            $('#guardianPostalCode').val("");
+            $('#guardianMobile').val("");
+            $('#guardianTelephone').val("");
     	});
 
     	// Find and remove selected table rows
@@ -1131,12 +1154,20 @@ if (preg_match ( '/Edit/', $title )) {
 										<br>
 										<thead>
 											<tr>
+                                                <th>Select</th>
 												<th>NIC</th>
 												<th>First Name</th>
 												<th>Last Name</th>
 												<th>Gender</th>
 												<th>Relationship</th>
-												<th>Select</th>
+                                                <th>Address 1</th>
+                                                <th>Address 2</th>
+                                                <th>Address 3</th>
+                                                <th>City</th>
+                                                <th>Postal Code</th>
+                                                <th>Mobile</th>
+                                                <th>Telephone</th>
+												
 											</tr>
 
 										</thead>
@@ -1156,7 +1187,7 @@ if (preg_match ( '/Edit/', $title )) {
 					</div>
 
 					<div id="GuardianModal" class="modal fade" role="dialog">
-  						<div class="modal-dialog">
+  						<div class="modal-dialog modal-lg">
 
     					<!-- Modal content-->
 		    				<div class="modal-content">
@@ -1224,6 +1255,75 @@ if (preg_match ( '/Edit/', $title )) {
 
 										</div>
 									</div>
+                                    <h4 class="box-title">Address Details</h4>  
+                                        <div class="row">
+                                            <div class="col-xs-4">
+                                                <div class="input-group" >
+                                                    <span class="input-group-addon" >Address 1<span style="color:red">*</span></span><input
+                                                        class="form-control" id="guardianAddress1" name="guardianAddress1"
+                                                        value="" />
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-xs-4">
+                                                <div class="input-group" >
+                                                    <span class="input-group-addon" >Address 2 </span><input
+                                                        class="form-control" id="guardianAddress2" name="guardianAddress2"
+                                                        value="" />
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-xs-4">
+                                                <div class="input-group" >
+                                                    <span class="input-group-addon" >Address 3 </span><input
+                                                        class="form-control" id="guardianAddress3" name="guardianAddress3"
+                                                        value="" />
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <br/>
+                                        <div class="row">
+                                            
+                                           
+                                            <div class="col-xs-4">
+                                                <div class="input-group" >
+                                                    <span class="input-group-addon" >City</span></span><input
+                                                        class="form-control" id="guardianCity" name="guardianCity"
+                                                        value="" />
+                                                </div>
+
+                                            </div>
+                                            <div class="col-xs-4">
+                                                <div class="input-group" >
+                                                    <span class="input-group-addon" >Postal Code</span></span><input
+                                                        class="form-control" id="guardianPostalCode" name="guardianPostalCode"
+                                                        value="" />
+                                                </div>
+                                             </div>
+                                        </div>
+                                        <br>
+                                        <h4 class="box-title">Other Details</h4>
+                                        <div class="row">
+                                            <div class="col-xs-3">
+                                                <div class="input-group" >
+                                                    <span class="input-group-addon" >Mobile</span><input
+                                                        class="form-control" id="guardianMobile" name="guardianMobile"
+                                                        value="" />
+                                                </div>
+
+                                            </div>
+                                            <div class="col-xs-3">
+                                                <div class="input-group" >
+                                                    <span class="input-group-addon" >Telephone</span><input
+                                                        class="form-control" id="guardianTelephone" name="guardianTelephone"
+                                                        value="" />
+                                                </div>
+
+                                            </div>
+                                        </div>
 									<br/>
 									<div class="row">
 										<div class="col-xs-3">

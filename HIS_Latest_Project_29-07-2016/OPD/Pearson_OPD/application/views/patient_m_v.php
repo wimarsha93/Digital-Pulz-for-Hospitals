@@ -29,8 +29,14 @@
     		var gGender = $('#guardianGender').val();
     		var gRealtionship = $('#guardianRelationship').val();
 
-    		var guardianAppend = '<tr><td>'+nic+'</td><td>' + gFirstName + '</td><td>' + gLastName + '</td><td>' + gGender + '</td><td>' 
-    		+ gRealtionship + '</td><td><input type="checkbox" name="record"></button></td></tr>';
+    		var guardianAppend = '<tr><td><input class="form-control" type="hidden" name="tableguardianNIC[]" value="'+nic+'" />'+nic+'</td>'+
+    		'<td><input class="form-control" type="hidden" name="tableguardianFirstname[]" value="'+gFirstName+'" />' + gFirstName + '</td>'+
+    		'<td><input class="form-control" type="hidden" name="tableguardianLastname[]" value="'+gLastName+'" />' + gLastName + '</td>'+
+    		'<td><input class="form-control" type="hidden" name="tableguardianGender[]" value="'+gGender+'" />' + gGender + '</td>'+
+    		'<td><input class="form-control" type="hidden" name="tableguardianRelationship[]" value="'+gRealtionship+'" />' + gRealtionship + '</td><td><input type="checkbox" name="record"></button></td></tr>';
+
+    		$('#gtablerows').val($('#tableGuardians tbody tr').length+1);
+
 
     		$('#tableGuardians tbody').append(guardianAppend);
 
@@ -840,7 +846,7 @@ if (preg_match ( '/Edit/', $title )) {
 						<div class="col-xs-3">
 							<div class="input-group" >
 								<span class="input-group-addon" >Address 1<span style="color:red">*</span></span><input
-									class="form-control" id="address1" name="address"
+									class="form-control" type="text" id="address1" name="address1"
 									required="required"
 									value="<?php
 									
@@ -855,7 +861,7 @@ if (preg_match ( '/Edit/', $title )) {
 						<div class="col-xs-3">
 							<div class="input-group" >
 								<span class="input-group-addon" >Address 2 </span><input
-									class="form-control" id="address2" name="address 2"
+									class="form-control" type="text" id="address2" name="address2"
 									value="<?php
 									
 									if (preg_match ( '/Edit/', $title )) {
@@ -870,7 +876,7 @@ if (preg_match ( '/Edit/', $title )) {
 						<div class="col-xs-3">
 							<div class="input-group" >
 								<span class="input-group-addon" >Address 3 </span><input
-									class="form-control" id="address3" name="address 3"
+									class="form-control" type="text" id="address3" name="address3"
 									value="<?php
 									
 									if (preg_match ( '/Edit/', $title )) {
@@ -1002,7 +1008,7 @@ if (preg_match ( '/Edit/', $title )) {
 						<div class="col-xs-3">
 							<div class="input-group" >
 								<span class="input-group-addon" >Mobile</span><input
-									class="form-control" id="emergencyMobile" name="emergency Mobile"
+									class="form-control" id="emergencyMobile" name="emergencyMobile"
 									value="<?php
 									
 									if (preg_match ( '/Edit/', $title )) {
@@ -1015,7 +1021,7 @@ if (preg_match ( '/Edit/', $title )) {
 						<div class="col-xs-3">
 							<div class="input-group" >
 								<span class="input-group-addon" >Telephone</span><input
-									class="form-control" id="emergencyTelephone" name="emergency Telephone"
+									class="form-control" id="emergencyTelephone" name="emergencyTelephone"
 									value="<?php
 									
 									if (preg_match ( '/Edit/', $title )) {
@@ -1032,7 +1038,7 @@ if (preg_match ( '/Edit/', $title )) {
 						<div class="col-xs-3">
 							<div class="input-group" >
 								<span class="input-group-addon" >Address 1<span style="color:red">*</span></span><input
-									class="form-control" id="emergencyaddress1" name="emergency address 1"
+									class="form-control" id="emergencyaddress1" name="emergencyaddress1"
 									required="required"
 									value="<?php
 									
@@ -1047,7 +1053,7 @@ if (preg_match ( '/Edit/', $title )) {
 						<div class="col-xs-3">
 							<div class="input-group" >
 								<span class="input-group-addon" >Address 2 </span><input
-									class="form-control" id="emergencyaddress2" name="emergency address 2"
+									class="form-control" id="emergencyaddress2" name="emergencyaddress2"
 									value="<?php
 									
 									if (preg_match ( '/Edit/', $title )) {
@@ -1061,7 +1067,7 @@ if (preg_match ( '/Edit/', $title )) {
 						<div class="col-xs-3">
 							<div class="input-group" >
 								<span class="input-group-addon" >Address 3 </span><input
-									class="form-control" id="emergencyaddress3" name="address 3"
+									class="form-control" id="emergencyaddress3" name="emergencyaddress3"
 									value="<?php
 									
 									if (preg_match ( '/Edit/', $title )) {
@@ -1114,9 +1120,12 @@ if (preg_match ( '/Edit/', $title )) {
 					</div>
 					<br/>
 					<div class="row">
+
 						<div class="col-xs-12" id='guardianList' hidden>
 							<div class="box">
 								<div class="box-body">
+								
+									<input class="form-control" id="gtablerows" name="gtablerows" type="hidden"  value="0" />
 									<table class="table table-bordered table-striped table-hover"
 										id="tableGuardians">
 										<br>
@@ -1159,7 +1168,7 @@ if (preg_match ( '/Edit/', $title )) {
 			        					<div class="col-xs-6">
 											<div class="input-group" >
 												<span class="input-group-addon" >NIC <span style="color:red">*</span></span><input
-													class="form-control" id="guardianNIC" name="guardian NIC"
+													class="form-control" id="guardianNIC" name="guardianNIC"
 													value=""/>
 											</div>
 
@@ -1173,7 +1182,7 @@ if (preg_match ( '/Edit/', $title )) {
 										<div class="col-xs-6">
 											<div class="input-group" >
 												<span class="input-group-addon" >First Name <span style="color:red">*</span></span><input
-													class="form-control" id="guardianFirstname" name="guardian firstname"
+													class="form-control" id="guardianFirstname" name="guardianFirstname"
 													value="" />
 											</div>
 
@@ -1181,7 +1190,7 @@ if (preg_match ( '/Edit/', $title )) {
 										<div class="col-xs-6">
 											<div class="input-group" >
 												<span class="input-group-addon">Last Name <span style="color:red">*</span></span><input type="text"
-													class="form-control" id="guardianLastname" name="guardian lastname"
+													class="form-control" id="guardianLastname" name="guardianLastname"
 													value="">
 											</div>
 
@@ -1192,7 +1201,7 @@ if (preg_match ( '/Edit/', $title )) {
 			        					<div class="col-xs-6">
 											<div class="input-group" >
 												<span class="input-group-addon" >Gender <span style="color:red">*</span></span> <select
-													class="form-control" id="guardianGender" name="guardian Gender"
+													class="form-control" id="guardianGender" name="guardianGender"
 													required="required">
 													<option class="" value="Male">Male</option>
 													<option class="" value="Female">Female</option>
@@ -1203,7 +1212,7 @@ if (preg_match ( '/Edit/', $title )) {
 										<div class="col-xs-6">
 											<div class="input-group" >
 												<span class="input-group-addon" >Relationship <span style="color:red">*</span></span> <select
-													class="form-control" id="guardianRelationship" name="guardian Relationship"
+													class="form-control" id="guardianRelationship" name="guardianRelationship"
 													required="required">
 													<option class="" value="Male">Father</option>
 													<option class="" value="Female">Mother</option>

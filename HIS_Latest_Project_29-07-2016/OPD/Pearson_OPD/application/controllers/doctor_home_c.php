@@ -53,23 +53,24 @@ class doctor_home_c extends CI_Controller {
     } else if ($visit_type == 5) {
 
             // get doc details
-        $this->load->model('ServiceModel', 'service');
-        $data['seldoc'] = json_decode($this->service->getDoctor($this->session->userdata('userid')));
+        //$this->load->model('ServiceModel', 'service');
+        //$data['seldoc'] = json_decode($this->service->getDoctor($this->session->userdata('userid')));
 
-        $data['treatedpatients'] = json_decode($this->queue->getTreatedPatients($_SESSION['user']));
+        //$data['treatedpatients'] = json_decode($this->queue->getTreatedPatients($_SESSION['user']));
 
-        
+        $this->load->model('PatientModel', 'patient');
+        $data['patients'] = json_decode($this->patient->getDoctorPatients($_SESSION['user'], $visit_type));
 
-        $data['qstatus'] = json_decode($this->queue->getQStatus($_SESSION['user']));
+        //$data['qstatus'] = json_decode($this->queue->getQStatus($_SESSION['user']));
 
-        $data['qtype'] = json_decode($this->queue->getQType());
+        //$data['qtype'] = json_decode($this->queue->getQType());
 
 
         $this->load->library('template');
         $this->template->title('Dashboard');
         $this->template
         ->set_layout('panellayout') 
-        ->build('doctor_p_queue_v',$data); 
+        ->build('doctor_p_search_v',$data); 
 
     } else if ($visit_type == 0) {
 

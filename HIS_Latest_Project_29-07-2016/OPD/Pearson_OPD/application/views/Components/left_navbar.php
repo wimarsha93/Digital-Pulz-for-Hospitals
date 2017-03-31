@@ -275,7 +275,7 @@
     <?php if($leftnavpage == 'new_patient') { ?>
     
     <li class=""><a
-      href="<?php echo site_url("/operator_home_c/view/1"); ?>" class=""><i
+      href="<?php echo site_url("/doctor_home_c/view/5"); ?>" class=""><i
     class="icon-chevron-left"></i> Home </a></li>
     
     <?php } ?>

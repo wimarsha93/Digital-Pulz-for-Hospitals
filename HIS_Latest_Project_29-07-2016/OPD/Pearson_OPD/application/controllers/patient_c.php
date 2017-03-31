@@ -28,7 +28,7 @@ session_start();
 				$this->load->view('Components/headerInward',$data);
  	            
 				// loading left side navigation
-                                $data['leftnavpage'] = 'new_patient';
+                $data['leftnavpage'] = 'new_patient';
 				$this->load->view('Components/left_navbar',$data);
 				
 				//************************************************************************************
@@ -85,9 +85,9 @@ session_start();
 
                         
                         
-              public function save()
+            public function save()
 			{
-				  if (isset($_SESSION["user"])) {
+				 if (isset($_SESSION["user"])) {
                                 if ($_SESSION["user"] == -1) {
                                     redirect($this->_site_base_url);
                                 }
@@ -131,16 +131,43 @@ session_start();
 					$this->patient->set_photo( $upload_data['full_path']);
 					$this->patient->set_dob($this->input->post('dob'));
 					$this->patient->set_gender($this->input->post('gender'));
-					$this->patient->set_contactpname($this->input->post('contactpname'));
-					$this->patient->set_contactpno($this->input->post('contactpno'));
+					//$this->patient->set_contactpname($this->input->post('contactpname'));
+					//$this->patient->set_contactpno($this->input->post('contactpno'));
 					$this->patient->set_cstatus($this->input->post('cstatus'));
-					$this->patient->set_address($this->input->post('address'));
+					$this->patient->set_address1($this->input->post('address1'));
+					$this->patient->set_address2($this->input->post('address2'));
+					$this->patient->set_address3($this->input->post('address3'));
+					$this->patient->set_city($this->input->post('city'));
+					$this->patient->set_postalcode($this->input->post('postalCode'));
+
 					$this->patient->set_telephone($this->input->post('telephone'));
 					$this->patient->set_lang($this->input->post('lang'));
 					$this->patient->set_citizen($this->input->post('citizen'));
 					$this->patient->set_blood($this->input->post('blood'));
+
+					$this->patient->set_emergnecyfname($this->input->post('emergencyfirstname'));
+					$this->patient->set_emergencylname($this->input->post('emergencylastname'));
+					$this->patient->set_emergencymobile($this->input->post('emergencyMobile'));
+					$this->patient->set_emergencytelepone($this->input->post('emergencyTelephone'));
+					$this->patient->set_emergencyaddress1($this->input->post('emergencyaddress1'));
+					$this->patient->set_emergencyaddress2($this->input->post('emergencyaddress2'));
+					$this->patient->set_emergencyaddress3($this->input->post('emergencyaddress3'));
+					$this->patient->set_emergencycity($this->input->post('emergencycity'));
+					$this->patient->set_emergencypostalcode($this->input->post('emergencypostalCode'));
+
 					$this->patient->set_remarks($this->input->post('remarks'));
 					$this->patient->set_userid( $this->session->userdata("userid"));
+
+
+					//$guardians = array();
+					for($i = 0; $i< $this->input->post('gtablerows'); $i++)
+    				{
+    					$this->patient->jsonSearializeGuardian($this->input->post('tableguardianNIC')[$i], $this->input->post('tableguardianFirstname')[$i], $this->input->post('tableguardianLastname')[$i], $this->input->post('tableguardianGender')[$i],$this->input->post('tableguardianRelationship')[$i]);
+    						//array_push($guardians, array( "guardiannic" => $this->input->post('guardianNIC')[$i], "guardianfname" => $this->input->post('guardianFname')[$i]));
+    					
+
+					}
+					//$this->patient->set_guardianlist($guardians);
 
 					$data['status'] =  json_decode( $this->patient->addPatient());
 				 

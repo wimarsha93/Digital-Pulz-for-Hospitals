@@ -14,11 +14,11 @@
             <div class="box box-solid" style="box-shadow:0px 0px 2px rgba(0, 0, 0, 0.2)">
                 <div class="box-header with-border">
                     <i class="fa fa-bookmark"></i>
-                    <h3 class="box-title">Search/Create Patient</h3>
+                    <h3 class="box-title">Search/Register Patient</h3>
                 </div><!-- /.box-header -->
                 <div class="box-body">
                     <div class="col-xs-3">
-                        <select class="form-control " id="cstatus" name="cstatus">
+                        <select class="form-control " id="searchType" name="searchType">
                             <option value="HIN">HIN</option>
                             <option value="HIN">NIC</option>
                             <option value="HIN">Name</option>
@@ -91,6 +91,10 @@
                             </table>
                         </div>
                     </div>
+                    <br/>
+                    <div class="col-xs-3">
+                        <button type="button" id="btnPatientCreate" class="btn btn-primary" >Print</button>
+                    </div>
                 </div>
             </div>
 
@@ -113,7 +117,11 @@
 
             $('#patientDetailsList').prop('hidden', false);
 
+            //ajax method for search and filling the table
+            
         });
+
+
     });
     
 </script>

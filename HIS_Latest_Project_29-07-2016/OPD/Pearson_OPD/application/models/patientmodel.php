@@ -184,7 +184,6 @@ class PatientModel {
 	{
 		$this->guardianlist[] = array( "guardiannic" => $nic, "guardianfname" => $fname, "guardianlname" => $lname, "guardiangender" => $gender, "guardianrelationship" => $relationship);
 
-		//array_push($guardianlist[], array( "guardiannic" => $nic, "guardianfname" => $fname, "guardianlname" => $lname, "guardiangender" => $gender, "guardianrelationship" => $relationship));
 	}
 	 
 	public function jsonSerialize()

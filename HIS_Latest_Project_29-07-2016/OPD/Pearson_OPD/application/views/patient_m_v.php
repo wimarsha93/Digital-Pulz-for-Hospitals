@@ -72,7 +72,7 @@
                 	$('#btnAddGuardian').prop('disabled', false);
             	}
             	else if($(this).prop("checked") == false){
-            		if($('#tableGuardians tbody tr').length >= 0)
+            		if($('#tableGuardians tbody tr').length > 0)
             		{
 	            		var result = confirm("Guardian list contain data, Do you want to remove them?");
 						if (result == true) {
@@ -82,8 +82,7 @@
 
 						   $('#btnAddGuardian').prop('disabled', true);
 						   $('#guardianList').prop('hidden', true);
-						} else {
-						    
+                           $('#gtablerows').val(0);
 						}
 					}
                 	
@@ -308,7 +307,8 @@ if (! preg_match ( '/Edit/', $title )) {
 	if ($status != null && $status != '0' && $status != "False") {
 		$pid = $status;
 		echo "window.open('../../index.php/print_c/print_patient_card/" . $pid . "','patientSlip','width=490,height=250');";
-		echo "window.location = '../operator_home_c/viewpatient/" . $pid . "';";
+		//echo "window.location = '../operator_home_c/viewpatient/" . $pid . "';";
+        echo "window.location = '../patient_overview_c/view/" . $pid . "';";
 	}
 }
 ?>

@@ -81,6 +81,7 @@
   <mapping resource="lib/driver/opd/mappings/Record.hbm.xml"/>
   <mapping resource="lib/driver/opd/mappings/LiveAllergy.hbm.xml"/>
   <mapping resource="lib/driver/opd/mappings/LiveInjury.hbm.xml"/>
+  <mapping resource="lib/driver/opd/mappings/GuardianForPatient.hbm.xml"/>
   <!-- HR -->
   <mapping resource="lib/driver/hr/mappings/HrAttendance.hbm.xml"/>
   <mapping resource="lib/driver/hr/mappings/HrContact.hbm.xml"/>

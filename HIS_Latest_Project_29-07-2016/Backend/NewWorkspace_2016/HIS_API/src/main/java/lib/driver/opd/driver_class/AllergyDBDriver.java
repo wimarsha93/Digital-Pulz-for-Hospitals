@@ -114,6 +114,7 @@ public class AllergyDBDriver {
 			
 			if (tx != null && tx.isActive()) {
 				try {
+					System.out.print(ex.getMessage());
 					tx.rollback();
 				} catch (HibernateException he) {
 					System.out.println("Error rolling back transaction");

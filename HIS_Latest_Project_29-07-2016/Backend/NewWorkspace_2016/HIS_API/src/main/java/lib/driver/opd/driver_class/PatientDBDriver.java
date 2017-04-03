@@ -3,6 +3,7 @@
  */
 package lib.driver.opd.driver_class;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -14,6 +15,9 @@ import lib.SessionFactoryUtil;
 import core.classes.api.user.AdminUser;
 import core.classes.opd.*;
 
+import org.codehaus.jettison.json.JSONArray;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -45,7 +49,7 @@ public class PatientDBDriver {
 	 *             throws a {@link HibernateException} on error rolling back
 	 *             transaction.
 	 */
-	public boolean insertPatient(OutPatient patient, int userid,String dob) {
+	public boolean insertPatient(OutPatient patient, int userid,String dob,JSONArray array) {
 
 		Transaction tx = null;
 		try {
@@ -53,14 +57,20 @@ public class PatientDBDriver {
 			AdminUser user = (AdminUser) session.get(AdminUser.class, userid);
 			patient.setPatientLastUpdateUser(user);
 			patient.setPatientCreateUser(user);
-
 			session.save(patient);
+			
+			Object result = session.createSQLQuery("SELECT LAST_INSERT_ID()")
+                    .uniqueResult();
 			tx.commit();
+			this.insertGuardiansForPatient(result,array);
+			
+			
 			return(cpsDBDriver.sendNewPatientObjToCPS(patient,dob));
 		} catch (RuntimeException ex) {
 			if (tx != null && tx.isActive()) {
 				try {
 					tx.rollback();
+					System.out.print(ex.getMessage());
 				} catch (HibernateException he) {
 					System.err.println("Error rolling back transaction");
 				}
@@ -114,11 +124,10 @@ public class PatientDBDriver {
 			}
 			patient.setPatientPassport(pat.getPatientPassport());
 			//patient.setPatientDateOfBirth(pat.getPatientDateOfBirth());
-			patient.setPatientContactPName(pat.getPatientContactPName());
-			patient.setPatientContactPNo(pat.getPatientContactPNo());
+			
 			patient.setPatientGender(pat.getPatientGender());
 			patient.setPatientCivilStatus(pat.getPatientCivilStatus());
-			patient.setPatientAddress(pat.getPatientAddress());
+		
 			patient.setPatientTelephone(pat.getPatientTelephone());
 			patient.setPatientPreferredLanguage(pat
 					.getPatientPreferredLanguage());
@@ -385,6 +394,78 @@ public class PatientDBDriver {
 		return HIN;
 		
 	}
+
+	public boolean insertGuardiansForPatient(Object patient_id, JSONArray array) {
+		// TODO Auto-generated method stub
+
+		Transaction tx = null;
+		try {
+			
+		    int Pid = Integer.valueOf(patient_id.toString());
+
+			tx = session.beginTransaction();
+			OutPatient patient = (OutPatient) session.get(OutPatient.class,
+					Pid);
+			
+			
+			System.out.println(array.length());
+			
+			
+			for (int i = 0; i < array.length(); i++) {
+				GuardianForPatient guardian = new GuardianForPatient();
+				
+				JSONObject obj = array.getJSONObject(i);
+				guardian.setGuardianNIC(obj.getString("guardiannic"));
+				guardian.setFirstName(obj.getString("guardianfname"));
+				guardian.setLastName(obj.getString("guardianlname"));
+				guardian.setGender(obj.getString("guardiangender"));
+				guardian.setRelationship(obj.getString("guardianrelationship"));
+				guardian.setAddress1(obj.getString("guardianaddress1"));
+				guardian.setAddress2(obj.getString("guardianaddress2"));
+				guardian.setAddress3(obj.getString("guardianaddress3"));
+				guardian.setCity(obj.getString("guardiancity"));
+				guardian.setPostalcode(obj.getString("guardianpostalcode"));
+				guardian.setMobile(obj.getString("guardianmobile"));
+				guardian.setTelephone(obj.getString("guardiantelephone"));
+				guardian.setPatient(patient);
+				
+
+				session.save(guardian);
+				guardian = null;
+				tx.commit();
+				tx = session.beginTransaction();
+			
+			}
+			
+			return true;
+		} 
+		
+		catch (RuntimeException ex) {
+			if (tx != null && tx.isActive()) {
+				try {
+					tx.rollback();
+					System.out.print(ex.getMessage());
+				} catch (HibernateException he) {
+					System.err.println("Error rolling back transaction");
+				}
+				throw ex;
+			}
+			else if(tx == null)
+			{
+				throw ex;
+			}
+			else
+			{
+				return false;
+			}
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());
+		}
+		return false;
+
+	}
+
 	
 
 }

@@ -29,16 +29,30 @@ public abstract class Patient  {
 	private String patientCivilStatus;
 	private String patientPreferredLanguage;
 	private String patientCitizenship;
-	private String patientblood;
+	private String patientblood;/*
 	private String patientContactPName;
-	private String patientContactPNo;
-	private String patientAddress;
+	private String patientContactPNo;	*/
+	private String patientAddress1;
+	private String patientAddress2;
+	private String patientAddress3;
+	private String patientCity;
+	private String patientPostalCode;
 	private Date patientCreateDate;
 	private AdminUser patientCreateUser;
 	private Date patientLastUpdate;
 	private AdminUser patientLastUpdateUser;
 	private String patientRemarks;
 	private int patientActive;
+	
+	private String emergnecyFname;
+	private String emergencyLname;
+	private String emergencyMobile;
+	private String emergencyTelepone;
+	private String emergencyAddress1;
+	private String emergencyAddress2;
+	private String emergencyAddress3;
+	private String emergencyCity;
+	private String emergencyPostalCode;
  
 	private Set<Visit> visits = new HashSet<Visit>();
 	private Set<Allergy> allergies = new HashSet<Allergy>();
@@ -46,8 +60,8 @@ public abstract class Patient  {
 	private Set<Exams> exams = new HashSet<Exams>();
 	private Set<Record> records = new HashSet<Record>(); 
 	private Set<AnswerSet> answerSets = new HashSet<AnswerSet>();
-	
- 
+	private Set<GuardianForPatient> guardians = new HashSet<GuardianForPatient>();
+
 	public String getPatientblood() {
 		return patientblood;
 	}
@@ -138,7 +152,7 @@ public abstract class Patient  {
 	public void setPatientCitizenship(String patientCitizenship) {
 		this.patientCitizenship = patientCitizenship;
 	}
-	public String getPatientContactPName() {
+	/*public String getPatientContactPName() {
 		return patientContactPName;
 	}
 	public void setPatientContactPName(String patientContactPName) {
@@ -150,11 +164,36 @@ public abstract class Patient  {
 	public void setPatientContactPNo(String patientContactPNo) {
 		this.patientContactPNo = patientContactPNo;
 	}
-	public String getPatientAddress() {
-		return patientAddress;
+	*/
+	public String getPatientAddress1() {
+		return patientAddress1;
 	}
-	public void setPatientAddress(String patientAddress) {
-		this.patientAddress = patientAddress;
+	public void setPatientAddress1(String patientAddress1) {
+		this.patientAddress1 = patientAddress1;
+	}
+	public String getPatientAddress2() {
+		return patientAddress2;
+	}
+	public void setPatientAddress2(String patientAddress2) {
+		this.patientAddress2 = patientAddress2;
+	}
+	public String getPatientAddress3() {
+		return patientAddress3;
+	}
+	public void setPatientAddress3(String patientAddress3) {
+		this.patientAddress3 = patientAddress3;
+	}
+	public String getPatientCity() {
+		return patientCity;
+	}
+	public void setPatientCity(String patientCity) {
+		this.patientCity = patientCity;
+	}
+	public String getPatientPostalCode() {
+		return patientPostalCode;
+	}
+	public void setPatientPostalCode(String patientPostalCode) {
+		this.patientPostalCode = patientPostalCode;
 	}
 	public Date getPatientCreateDate() {
 		return patientCreateDate;
@@ -192,6 +231,60 @@ public abstract class Patient  {
 	public void setPatientActive(int patientActive) {
 		this.patientActive = patientActive;
 	}
+	public String getEmergnecyFname() {
+		return emergnecyFname;
+	}
+	public void setEmergnecyFname(String emergnecyFname) {
+		this.emergnecyFname = emergnecyFname;
+	}
+	public String getEmergencyLname() {
+		return emergencyLname;
+	}
+	public void setEmergencyLname(String emergencyLname) {
+		this.emergencyLname = emergencyLname;
+	}
+	public String getEmergencyMobile() {
+		return emergencyMobile;
+	}
+	public void setEmergencyMobile(String emergencyMobile) {
+		this.emergencyMobile = emergencyMobile;
+	}
+	public String getEmergencyTelepone() {
+		return emergencyTelepone;
+	}
+	public void setEmergencyTelepone(String emergencyTelepone) {
+		this.emergencyTelepone = emergencyTelepone;
+	}
+	public String getEmergencyAddress1() {
+		return emergencyAddress1;
+	}
+	public void setEmergencyAddress1(String emergencyAddress1) {
+		this.emergencyAddress1 = emergencyAddress1;
+	}
+	public String getEmergencyAddress2() {
+		return emergencyAddress2;
+	}
+	public void setEmergencyAddress2(String emergencyAddress2) {
+		this.emergencyAddress2 = emergencyAddress2;
+	}
+	public String getEmergencyAddress3() {
+		return emergencyAddress3;
+	}
+	public void setEmergencyAddress3(String emergencyAddress3) {
+		this.emergencyAddress3 = emergencyAddress3;
+	}
+	public String getEmergencyCity() {
+		return emergencyCity;
+	}
+	public void setEmergencyCity(String emergencyCity) {
+		this.emergencyCity = emergencyCity;
+	}
+	public String getEmergencyPostalCode() {
+		return emergencyPostalCode;
+	}
+	public void setEmergencyPostalCode(String emergencyPostalCode) {
+		this.emergencyPostalCode = emergencyPostalCode;
+	}
 	public Set<Visit> getVisits() {
 		return visits;
 	}
@@ -228,7 +321,10 @@ public abstract class Patient  {
 	public void setAnswerSets(Set<AnswerSet> answerSets) {
 		this.answerSets = answerSets;
 	}
-
-	
-  
+	public Set<GuardianForPatient> getGuardians() {
+		return guardians;
+	}
+	public void setGuardians(Set<GuardianForPatient> guardians) {
+		this.guardians = guardians;
+	}
 }

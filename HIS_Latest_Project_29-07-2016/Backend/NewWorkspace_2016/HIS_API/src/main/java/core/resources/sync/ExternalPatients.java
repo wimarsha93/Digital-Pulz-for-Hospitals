@@ -88,11 +88,11 @@ public class ExternalPatients {
 					
 
 					System.out.println(patient.getPatientDateOfBirth());
-					patient.setPatientContactPName(jObject.get("patientContactPName").toString());
-					patient.setPatientContactPNo(jObject.get("patientContactPNo").toString());	
+				/*	patient.setPatientContactPName(jObject.get("patientContactPName").toString());
+					patient.setPatientContactPNo(jObject.get("patientContactPNo").toString());	*/
 					patient.setPatientGender(jObject.get("patientGender").toString());
 					patient.setPatientCivilStatus(jObject.get("patientCivilStatus").toString());
-					patient.setPatientAddress(jObject.get("patientAddress").toString());
+					
 					patient.setPatientTelephone(jObject.get("patientTelephone").toString());
 					patient.setPatientPreferredLanguage(jObject.get("patientPreferredLanguage").toString());
 					patient.setPatientCitizenship(jObject.get("patientCitizenship").toString());

@@ -80,10 +80,10 @@ public class cpsDBDriver {
 				ob.put("gender",patient.getPatientGender());
 				ob.put("cstatus",patient.getPatientCivilStatus());
 				ob.put("telephone",patient.getPatientTelephone());
-				ob.put("address",patient.getPatientAddress());
+				
 				ob.put("citizen",patient.getPatientCitizenship());
-				ob.put("contactpname",patient.getPatientContactPName());
-				ob.put("contactpno",patient.getPatientContactPNo());
+//				ob.put("contactpname",patient.getPatientContactPName());
+//				ob.put("contactpno",patient.getPatientContactPNo());
 				ob.put("remarks",patient.getPatientRemarks());
 				OutputStream os = conn.getOutputStream();
 				os.write(ob.toString().getBytes());
@@ -143,10 +143,10 @@ public class cpsDBDriver {
 			ob.put("gender",patient.getPatientGender());
 			ob.put("cstatus",patient.getPatientCivilStatus());
 			ob.put("telephone",patient.getPatientTelephone());
-			ob.put("address",patient.getPatientAddress());
+			
 			ob.put("citizen",patient.getPatientCitizenship());
-			ob.put("contactpname",patient.getPatientContactPName());
-			ob.put("contactpno",patient.getPatientContactPNo());
+//			ob.put("contactpname",patient.getPatientContactPName());
+//			ob.put("contactpno",patient.getPatientContactPNo());
 			ob.put("remarks",patient.getPatientRemarks());
 			OutputStream os = conn.getOutputStream();
 			os.write(ob.toString().getBytes());

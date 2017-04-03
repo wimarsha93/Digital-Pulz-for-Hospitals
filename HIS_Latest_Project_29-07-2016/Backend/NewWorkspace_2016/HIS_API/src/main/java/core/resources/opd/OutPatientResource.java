@@ -23,6 +23,7 @@ import javax.ws.rs.core.MediaType;
 import lib.driver.opd.driver_class.PatientDBDriver;
 
 import org.apache.log4j.Logger;
+import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
@@ -66,7 +67,10 @@ public class OutPatientResource {
 	public String registerPatient(JSONObject pJson) throws JSONException
 	{
 		System.out.println(pJson);
-
+		
+		JSONArray array = pJson.getJSONArray( "guardianlist");
+		
+		
 		
 		log.info("Entering the register Patient method");
 		try {
@@ -114,17 +118,28 @@ public class OutPatientResource {
 				
 			patient.setPatientDateOfBirth(dateformat2.parse(d)); 
 			}
-			patient.setPatientContactPName(pJson.get("contactpname").toString());
-			patient.setPatientContactPNo(pJson.get("contactpno").toString());	
+			
 			patient.setPatientGender(pJson.get("gender").toString());
 			patient.setPatientCivilStatus(pJson.get("cstatus").toString());
-			patient.setPatientAddress(pJson.get("address").toString());
+			patient.setPatientAddress1(pJson.get("address1").toString());
+			patient.setPatientAddress2(pJson.get("address2").toString());
+			patient.setPatientAddress3(pJson.get("address3").toString());
+			patient.setPatientCity(pJson.get("city").toString());
+			patient.setPatientPostalCode(pJson.get("postalcode").toString());
 			patient.setPatientTelephone(pJson.get("telephone").toString());
 			patient.setPatientPreferredLanguage(pJson.get("lang").toString());
 			patient.setPatientCitizenship(pJson.get("citizen").toString());
 			patient.setPatientblood(pJson.get("blood").toString());
 			patient.setPatientRemarks(pJson.get("remarks").toString());
-			
+			patient.setEmergencyAddress1(pJson.get("emergencyaddress1").toString());
+			patient.setEmergencyAddress2(pJson.get("emergencyaddress2").toString());
+			patient.setEmergencyAddress3(pJson.get("emergencyaddress3").toString());
+			patient.setEmergencyCity(pJson.get("emergencycity").toString());
+			patient.setEmergencyLname(pJson.get("emergencyfname").toString());
+			patient.setEmergencyMobile(pJson.get("emergencymobile").toString());
+			patient.setEmergencyPostalCode(pJson.get("emergencypostalcode").toString());
+			patient.setEmergencyTelepone(pJson.get("emergencyTelephone").toString());
+			patient.setEmergnecyFname(pJson.get("emergencyfname").toString());
 			
 			int userid = pJson.getInt("userid");
 			patient.setPatientActive(1);
@@ -132,8 +147,9 @@ public class OutPatientResource {
 			patient.setPatientCreateDate(new Date());
 			patient.setPatientLastUpdate(new Date());
 		
-			patientDBDriver.insertPatient(patient,userid,pJson.get("dob").toString());
-			 
+			boolean i = patientDBDriver.insertPatient(patient,userid,pJson.get("dob").toString(),array);
+		
+			
 			
 			log.info("registering Patient Successful, PatientID = "+patient.getPatientID());
 			
@@ -258,11 +274,10 @@ public class OutPatientResource {
 			if(!(dob.isEmpty() | dob == "" | dob =="null" | dob==null))
 				patient.setPatientDateOfBirth(dateformat2.parse(pJson.get("dob").toString())); 
  
-			patient.setPatientContactPName(pJson.get("contactpname").toString());
-			patient.setPatientContactPNo(pJson.get("contactpno").toString());	
+			
 			patient.setPatientGender(pJson.get("gender").toString());
 			patient.setPatientCivilStatus(pJson.get("cstatus").toString());
-			patient.setPatientAddress(pJson.get("address").toString());
+			
 			patient.setPatientTelephone(pJson.get("telephone").toString());
 			patient.setPatientPreferredLanguage(pJson.get("lang").toString());
 			patient.setPatientCitizenship(pJson.get("citizen").toString());

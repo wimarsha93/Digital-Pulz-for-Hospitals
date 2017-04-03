@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 31, 2017 11:59:13 AM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="core.classes.opd.GuardianForPatient" table="opd_patient_guardians">
+        <id name="GuardianNIC" type="java.lang.String">
+            <column name="GuardianNIC" />
+        </id>
+        <property name="FirstName" type="java.lang.String">
+            <column name="FirstName" length="100" not-null="false" />
+        </property>
+        <property name="LastName" type="java.lang.String">
+            <column name="LastName" length="100" not-null="false" />
+        </property>
+        <property name="Gender" type="java.lang.String">
+            <column name="Gender" length="100" not-null="false" />
+        </property>
+        <property name="Relationship" type="java.lang.String">
+            <column name="Relationship" length="100" not-null="false" />
+        </property>
+        <property name="address1" type="java.lang.String">
+            <column name="address1"  length="100" not-null="false" />
+        </property>
+        <property name="address2" type="java.lang.String">
+            <column name="address2" length="100" not-null="false" />
+        </property>
+        <property name="address3" type="java.lang.String">
+            <column name="address3" length="100"  not-null="false" />
+        </property>
+        <property name="city" type="java.lang.String">
+            <column name="city" length="100" not-null="false" />
+        </property>
+        <property name="postalcode" type="java.lang.String">
+            <column name="postalcode" length="100" not-null="false" />
+        </property>
+         <property name="telephone" type="java.lang.String">
+            <column name="telephone" length="100" not-null="false" />
+        </property>
+        <property name="mobile" type="java.lang.String">
+            <column name="mobile" length="100" not-null="false" />
+        </property>
+        <many-to-one name="patient" class="core.classes.opd.OutPatient" fetch="select">
+        	<column name="patient_id" not-null="false"/>
+        </many-to-one> 
+    </class>
+</hibernate-mapping>

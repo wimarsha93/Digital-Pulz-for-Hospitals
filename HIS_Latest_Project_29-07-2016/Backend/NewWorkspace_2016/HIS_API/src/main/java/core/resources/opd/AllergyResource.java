@@ -201,7 +201,7 @@ public class AllergyResource {
 			jsonErrorObject.put("errorcode", ErrorConstants.NO_CONNECTION.getCode());
 			jsonErrorObject.put("message", ErrorConstants.NO_CONNECTION.getMessage());
 			
-			
+			System.out.print(e.getMessage());
 			return jsonErrorObject.toString(); 
 		}
 		catch(Exception e)

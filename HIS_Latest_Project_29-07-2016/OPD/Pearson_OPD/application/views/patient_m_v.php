@@ -108,6 +108,12 @@
                            $('#gtablerows').val(0);
 						}
 					}
+                    else
+                    {
+                        $('#btnAddGuardian').prop('disabled', true);
+                        $('#guardianList').prop('hidden', true);
+                        $('#gtablerows').val(0);
+                    }
                 	
             	}
         });
@@ -295,13 +301,13 @@
 <?php
 if (preg_match ( '/Edit/', $title )) {
 	
-	echo "
+	/*echo "
                         var date=$.datepicker.parseDate('yy-mm-dd', '" . date ( 'y-m-d', $pprofile->patientDateOfBirth / 1000 ) . "');
                         $( '#dob' ).datepicker();
                         $( '#dob' ).datepicker( 'option', 'dateFormat', 'y-m-d' );
                         $( '#dob' ).datepicker( 'option', 'changeMonth', 'true' );
                         $( '#dob' ).datepicker( 'option', 'changeYear','true' );
-                        $('#dob').datepicker('setDate', date);";
+                        $('#dob').datepicker('setDate', date);";*/
 	
 	if ($pprofile->patientPhoto != NULL & $pprofile->patientPhoto != "null") {
 		echo "
@@ -402,7 +408,8 @@ if (! preg_match ( '/Edit/', $title )) {
 										<tr>
 											<td style="width: 50px"><strong>Date of Birth</strong></td>
 											<td style="padding-left: 10px">   
-				<?php echo date("d-m-Y",$pprofile->patientDateOfBirth/1000);  ?></td>
+				<?php date_default_timezone_set('Asia/Colombo');
+                echo date("Y-m-d",$pprofile->patientDateOfBirth/1000);  ?></td>
 										</tr>
 
 									</table>
@@ -615,11 +622,18 @@ if (preg_match ( '/Edit/', $title )) {
 
 					
 						<div class="col-xs-3">
-							<div class="input-group" >
+							<div class="input-group, input-group date" data-provide="datepicker" data-date-format="yyyy-mm-dd" >
 							
 								<span class="input-group-addon">Date Of Birth <span style="color:red ">*</span></span> 
 					
-								<input class="form-control"  type="date" id="dob" name="dob" />
+								<input class="form-control"  type="text" id="dob" name="dob" required="required" 
+                                value="<?php
+                                    
+                                    date_default_timezone_set('Asia/Colombo');
+                                    if (preg_match ( '/Edit/', $title )) {
+                                        echo date("Y-m-d", $pprofile->patientDateOfBirth/1000);
+                                    }
+                                    ?>"/>
 								
 									
 							</div>
@@ -1008,7 +1022,7 @@ if (preg_match ( '/Edit/', $title )) {
 									value="<?php
 									
 									if (preg_match ( '/Edit/', $title )) {
-										echo $pprofile->patientEmergencyFirstname;
+										echo $pprofile->emergnecyFname;
 									}
 									?>" />
 							</div>
@@ -1022,7 +1036,7 @@ if (preg_match ( '/Edit/', $title )) {
 									value="<?php
 									
 									if (preg_match ( '/Edit/', $title )) {
-										echo $pprofile->patientEmergencyLastname;
+										echo $pprofile->emergencyLname;
 									}
 									?>">
 							</div>
@@ -1035,7 +1049,7 @@ if (preg_match ( '/Edit/', $title )) {
 									value="<?php
 									
 									if (preg_match ( '/Edit/', $title )) {
-										echo $pprofile->patientEmergencyMobile;
+										echo $pprofile->emergencyMobile;
 									}
 									?>" />
 							</div>
@@ -1048,7 +1062,7 @@ if (preg_match ( '/Edit/', $title )) {
 									value="<?php
 									
 									if (preg_match ( '/Edit/', $title )) {
-										echo $pprofile->patientEmergencyTelephone;
+										echo $pprofile->emergencyTelepone;
 									}
 									?>" />
 							</div>
@@ -1066,7 +1080,7 @@ if (preg_match ( '/Edit/', $title )) {
 									value="<?php
 									
 									if (preg_match ( '/Edit/', $title )) {
-										echo $pprofile->patientEmergencyAddress1;
+										echo $pprofile->emergencyAddress1;
 									}
 									?>" />
 							</div>
@@ -1080,7 +1094,7 @@ if (preg_match ( '/Edit/', $title )) {
 									value="<?php
 									
 									if (preg_match ( '/Edit/', $title )) {
-										echo $pprofile->patientEmergencyAddress2;
+										echo $pprofile->emergencyAddress2;
 									}
 									?>" />
 							</div>
@@ -1094,7 +1108,7 @@ if (preg_match ( '/Edit/', $title )) {
 									value="<?php
 									
 									if (preg_match ( '/Edit/', $title )) {
-										echo $pprofile->patientEmergencyAddress3;
+										echo $pprofile->emergencyAddress3;
 									}
 									?>" />
 							</div>
@@ -1108,7 +1122,7 @@ if (preg_match ( '/Edit/', $title )) {
 									value="<?php
 									
 									if (preg_match ( '/Edit/', $title )) {
-										echo $pprofile->patientEmergencyCity;
+										echo $pprofile->emergencyCity;
 									}
 									?>" />
 							</div>
@@ -1124,7 +1138,7 @@ if (preg_match ( '/Edit/', $title )) {
 									value="<?php
 									
 									if (preg_match ( '/Edit/', $title )) {
-										echo $pprofile->patientEmergencyPostalCode;
+										echo $pprofile->emergencyPostalCode;
 									}
 									?>" />
 							</div>

@@ -191,7 +191,7 @@
 													<tr>
 														<td style="width: 50px"><strong>Date of Birth</strong></td>
 														<td style="padding-left: 10px">   
-															<?php echo date("d-m-Y",$pprofile->patientDateOfBirth/1000);  ?></td>
+															<?php date_default_timezone_set('Asia/Colombo'); echo date("Y-m-d",$pprofile->patientDateOfBirth/1000);  ?></td>
 														</tr>
 														<tr>
 															<td><strong>Phone </strong></td>
@@ -200,11 +200,11 @@
 
 															</tr>
 															<tr>
-																<td><strong>Address </strong></td>
-																<td style="padding-left: 10px">
-																	<?php echo "$pprofile->patientAddress" ;?>
+																<td><strong>Address</strong></td>
+																<td style="padding-left: 0px">
+																	<?php echo "$pprofile->patientAddress1" ;?>, <?php echo "$pprofile->patientAddress2" ;?>, <?php echo "$pprofile->patientAddress3" ;?>, <?php echo "$pprofile->patientCity" ;?>, <?php echo "$pprofile->patientPostalCode" ;?>
 																</td>
-
+																
 
 															</tr>
 

@@ -231,6 +231,7 @@ session_start();
 					$upload_data['full_path'] = NULL;
 				}
 				
+				$this->patient->set_pid($pid);
 				$this->patient->set_title($this->input->post('title'));
 				$this->patient->set_fullname($this->input->post('fullname'));
 				$this->patient->set_personalname($this->input->post('personalname'));

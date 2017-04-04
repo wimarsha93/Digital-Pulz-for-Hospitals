@@ -231,7 +231,7 @@
                     <!--<td id="tdpatientID"><?php //echo $row->patientID; ?></td>-->
                     <td id="tdname"><?php if ($row->patientTitle == "Baby" | $row->patientTitle == "Rev") echo $row->patientTitle . " " . $row->patientFullName;
             else echo $row->patientTitle . $row->patientFullName; ?></td>
-                    <td id="tddob"><?php echo date("Y-m-d", $row->patientDateOfBirth / 1000); ?></td>
+                    <td id="tddob"><?php echo date_default_timezone_set('Asia/Colombo'); date("Y-m-d", $row->patientDateOfBirth / 1000); ?></td>
                     <td id="tdgender"><?php echo $row->patientGender; ?></td>
                     <td id="tdcivil"><?php echo $row->patientCivilStatus; ?></td>
                     <td id="tdnic"><?php echo $row->patientNIC; ?></td>

@@ -259,6 +259,8 @@ public class OutPatientResource {
 		try {
 			System.out.println(pJson.toString());
 			
+			JSONArray guardianlist = pJson.getJSONArray( "guardianlist");
+			
 			OutPatient patient  =  new OutPatient(); 
 			
 			patient.setPatientTitle(pJson.get("title").toString());
@@ -275,7 +277,7 @@ public class OutPatientResource {
 				patient.setPatientDateOfBirth(dateformat2.parse(pJson.get("dob").toString())); 
  
 			
-			patient.setPatientGender(pJson.get("gender").toString());
+		/*	patient.setPatientGender(pJson.get("gender").toString());
 			patient.setPatientCivilStatus(pJson.get("cstatus").toString());
 			
 			patient.setPatientTelephone(pJson.get("telephone").toString());
@@ -283,13 +285,38 @@ public class OutPatientResource {
 			patient.setPatientCitizenship(pJson.get("citizen").toString());
 			patient.setPatientblood(pJson.get("blood").toString());
 			patient.setPatientRemarks(pJson.get("remarks").toString());
+			
+		*/
+			
+			
+			patient.setPatientGender(pJson.get("gender").toString());
+			patient.setPatientCivilStatus(pJson.get("cstatus").toString());
+			patient.setPatientAddress1(pJson.get("address1").toString());
+			patient.setPatientAddress2(pJson.get("address2").toString());
+			patient.setPatientAddress3(pJson.get("address3").toString());
+			patient.setPatientCity(pJson.get("city").toString());
+			patient.setPatientPostalCode(pJson.get("postalcode").toString());
+			patient.setPatientTelephone(pJson.get("telephone").toString());
+			patient.setPatientPreferredLanguage(pJson.get("lang").toString());
+			patient.setPatientCitizenship(pJson.get("citizen").toString());
+			patient.setPatientblood(pJson.get("blood").toString());
+			patient.setPatientRemarks(pJson.get("remarks").toString());
+			patient.setEmergencyAddress1(pJson.get("emergencyaddress1").toString());
+			patient.setEmergencyAddress2(pJson.get("emergencyaddress2").toString());
+			patient.setEmergencyAddress3(pJson.get("emergencyaddress3").toString());
+			patient.setEmergencyCity(pJson.get("emergencycity").toString());
+			patient.setEmergencyLname(pJson.get("emergencyfname").toString());
+			patient.setEmergencyMobile(pJson.get("emergencymobile").toString());
+			patient.setEmergencyPostalCode(pJson.get("emergencypostalcode").toString());
+			patient.setEmergencyTelepone(pJson.get("emergencyTelephone").toString());
+			patient.setEmergnecyFname(pJson.get("emergencyfname").toString());
 			patient.setPatientActive( Integer.parseInt(pJson.get("active").toString()));
-		
+			
 			patient.setPatientLastUpdate(new Date());
 			
 			int userid = pJson.getInt("userid");
 			int patientid = pJson.getInt("pid");
-			patientDBDriver.updatePatient(patientid,patient,userid,pJson.get("dob").toString());
+			patientDBDriver.updatePatient(patientid,patient,userid,pJson.get("dob").toString(),guardianlist);
 			
 			log.info("updating Patient Successful, PatientID = "+patient.getPatientID());
 			return patient.getPatientID() + "";	
@@ -298,7 +325,7 @@ public class OutPatientResource {
 		catch (JSONException e) {
 			log.error("Runtime Exception in updating Patients, message:" + e.getMessage());
 			JSONObject jsonErrorObject = new JSONObject();
-			
+			System.out.println(e.getMessage());
 			jsonErrorObject.put("errorcode", ErrorConstants.FILL_REQUIRED_FIELDS.getCode());
 			jsonErrorObject.put("message", ErrorConstants.FILL_REQUIRED_FIELDS.getMessage());
 			

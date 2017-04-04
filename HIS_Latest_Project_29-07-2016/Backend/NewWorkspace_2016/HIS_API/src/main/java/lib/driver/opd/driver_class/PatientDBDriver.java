@@ -99,7 +99,7 @@ public class PatientDBDriver {
 	 *             throws a {@link HibernateException} on error rolling back
 	 *             transaction.
 	 */
-	public boolean updatePatient(int patientID, OutPatient pat, int userid,String dob) {
+	public boolean updatePatient(int patientID, OutPatient pat, int userid,String dob,JSONArray array) {
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
@@ -126,6 +126,12 @@ public class PatientDBDriver {
 			//patient.setPatientDateOfBirth(pat.getPatientDateOfBirth());
 			
 			patient.setPatientGender(pat.getPatientGender());
+			
+			patient.setPatientAddress1(pat.getPatientAddress1());
+			patient.setPatientAddress2(pat.getPatientAddress2());
+			patient.setPatientAddress3(pat.getPatientAddress3());
+			patient.setPatientCity(pat.getPatientCity());
+			patient.setPatientPostalCode(pat.getPatientPostalCode());
 			patient.setPatientCivilStatus(pat.getPatientCivilStatus());
 		
 			patient.setPatientTelephone(pat.getPatientTelephone());
@@ -136,6 +142,17 @@ public class PatientDBDriver {
 			patient.setPatientRemarks(pat.getPatientRemarks());
 			patient.setPatientActive(pat.getPatientActive());
 			patient.setPatientCreateUser(patient.getPatientCreateUser());
+			
+			patient.setEmergencyAddress1(pat.getPatientAddress1());
+			patient.setEmergencyAddress2(pat.getEmergencyAddress2());
+			patient.setEmergencyAddress3(pat.getEmergencyAddress3());
+			patient.setEmergencyCity(pat.getEmergencyCity());
+			patient.setEmergencyLname(pat.getEmergencyLname());
+			patient.setEmergencyMobile(pat.getEmergencyMobile());
+			patient.setEmergencyPostalCode(pat.getEmergencyPostalCode());
+			patient.setEmergencyTelepone(pat.getEmergencyTelepone());
+			patient.setEmergnecyFname(pat.getEmergnecyFname());
+			patient.setPatientCreateUser(patient.getPatientCreateUser());
 
 			AdminUser user = (AdminUser) session.get(AdminUser.class, userid);
 			patient.setPatientLastUpdateUser(user);
@@ -143,7 +160,10 @@ public class PatientDBDriver {
 			patient.setPatientLastUpdate(pat.getPatientLastUpdate());
 
 			session.update(patient);
+			
+			Object result = (Integer) patient.getPatientID();
 			tx.commit();
+			this.insertGuardiansForPatient(result,array);
 			//cpsDBDriver.sendUpdatedPatientObjToCPS(patient,dob);
 			return true;
 		} catch (Exception ex) {

@@ -486,6 +486,47 @@ public class PatientDBDriver {
 
 	}
 
+	public GuardianForPatient getGuardianDetails(String nic) {
+		// TODO Auto-generated method stub
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			Query query = session
+					.createQuery("select p from GuardianForPatient as p where p.GuardianNIC = :nic ");
+			query.setParameter("nic", nic);
+
+			List GuardianList = query.list();
+
+			if (GuardianList.size() == 0)
+				return null;
+
+			
+			 
+			GuardianForPatient guardian = (GuardianForPatient) GuardianList.get(0);
+			
+			tx.commit();
+			return guardian;
+		} catch (RuntimeException ex) {
+			if (tx != null && tx.isActive()) {
+				try {
+					tx.rollback();
+				} catch (HibernateException he) {
+					System.err.println("Error rolling back transaction");
+				}
+				throw ex;
+			}
+			else if(tx == null)
+			{
+				throw ex;
+			}
+			else
+			{
+				return null;
+			}
+		}
+
+	}
+
 	
 
 }

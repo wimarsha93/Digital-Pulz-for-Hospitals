@@ -153,6 +153,7 @@ session_start();
 					$this->patient->set_emergencyaddress2($this->input->post('emergencyaddress2'));
 					$this->patient->set_emergencyaddress3($this->input->post('emergencyaddress3'));
 					$this->patient->set_emergencycity($this->input->post('emergencycity'));
+
 					$this->patient->set_emergencypostalcode($this->input->post('emergencypostalCode'));
 
 					$this->patient->set_remarks($this->input->post('remarks'));
@@ -264,7 +265,7 @@ session_start();
 				$this->patient->set_emergencyaddress3($this->input->post('emergencyaddress3'));
 				$this->patient->set_emergencycity($this->input->post('emergencycity'));
 				$this->patient->set_emergencypostalcode($this->input->post('emergencypostalCode'));
-
+				$this->patient->set_active($this->input->post('active'));
 				$this->patient->set_remarks($this->input->post('remarks'));
 				$this->patient->set_userid( $this->session->userdata("userid"));
 

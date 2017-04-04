@@ -745,7 +745,14 @@ if (preg_match ( '/Edit/', $title )) {
 						<div class="col-xs-3">
 							<div class="input-group">
 								<span class="input-group-addon">Passport</span><input
-									type="text" class="form-control" id="passport" name="passport" />
+									type="text" class="form-control" id="passport" name="passport" 
+                                    value="<?php
+                                    
+                                    if (preg_match ( '/Edit/', $title )) {
+                                        echo $pprofile->patientPassport;
+                                    }
+                                    ?>"
+                                    />
 							</div>
 
 						</div>

@@ -527,6 +527,64 @@ public class PatientDBDriver {
 
 	}
 
+	public OutPatient getPatientsPatinentByFeild(String type,String feild) {
+		System.out.println(type +""+"" +feild);
+		
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			
+			Query query = null;
+			
+			if(type.equals("nic")){
+				System.out.println(type +""+"" +feild);
+				
+				query = session
+						.createQuery("select p from OutPatient as p where p.patientNIC = :nic ");
+				query.setParameter("nic", feild);
+			}
+			else if(type.equals("hin")){
+				query = session
+						.createQuery("select p from OutPatient as p where p.patientHIN = :hin ");
+				query.setParameter("hin", feild);
+			}
+			else if(type.equals("name")){
+				query = session
+						.createQuery("select p from OutPatient as p where p.patientFullName = :patientFullName ");
+				query.setParameter("patientFullName", feild);
+			}
+
+			List PatientList = query.list();
+
+			if (PatientList.size() == 0)
+				return null;
+
+			
+			 
+			OutPatient  patient = (OutPatient) PatientList.get(0);
+			
+			tx.commit();
+			return patient;
+		} catch (RuntimeException ex) {
+			if (tx != null && tx.isActive()) {
+				try {
+					tx.rollback();
+				} catch (HibernateException he) {
+					System.err.println("Error rolling back transaction");
+				}
+				throw ex;
+			}
+			else if(tx == null)
+			{
+				throw ex;
+			}
+			else
+			{
+				return null;
+			}
+		}
+	}
+
 	
 
 }

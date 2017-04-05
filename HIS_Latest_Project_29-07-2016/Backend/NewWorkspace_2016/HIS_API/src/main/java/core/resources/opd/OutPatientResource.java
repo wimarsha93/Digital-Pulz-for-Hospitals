@@ -215,7 +215,7 @@ public class OutPatientResource {
 			"patientLastUpDateUser.userRoles",
 			"patientCreateUser.specialPermissions", "patientCreateUser.userRoles","core.classes.hr.HrEmployee.password"
 			).include("allergies","visits","exams","attachments","records","laborders",
-						"answerSets","answerSets.questionnaireID").serialize(patient);
+						"answerSets","answerSets.questionnaireID","guardians").serialize(patient);
 		}
 		catch(RuntimeException e)
 		{
@@ -522,7 +522,7 @@ public class OutPatientResource {
 	
 	
 	
-	/**
+/*	*//**
 	 * Get Patient Details By Patient ID
 	 * @param patientId Is An Integer Value
 	 * @return JSON String that contains all the Patient Details
@@ -539,6 +539,56 @@ public class OutPatientResource {
 		guardians = patientDBDriver.getGuardianDetails(nic);
 		JSONSerializer jsonSerializer = new JSONSerializer();
 		return jsonSerializer.serialize(guardians);
+		}
+		catch(RuntimeException e)
+		{
+			log.error("Runtime Exception in getting Patients by PID, message:" + e.getMessage());
+			JSONObject jsonErrorObject = new JSONObject();
+			
+			jsonErrorObject.put("errorcode", ErrorConstants.NO_CONNECTION.getCode());
+			jsonErrorObject.put("message", ErrorConstants.NO_CONNECTION.getMessage());
+			
+			
+			return jsonErrorObject.toString(); 
+		}
+		catch(Exception e)
+		{
+			log.error("Error while getting Patients by PID, message:" + e.getMessage());
+			
+			JSONObject jsonErrorObject = new JSONObject();
+			
+			jsonErrorObject.put("errorcode", ErrorConstants.NO_DATA.getCode());
+			jsonErrorObject.put("message", ErrorConstants.NO_DATA.getMessage());
+			
+			return jsonErrorObject.toString(); 
+			
+		}
+
+	}
+	
+	
+	
+
+	/*
+	 * Get Patient Details By Patient ID
+	 * @param patientId Is An Integer Value
+	 * @return JSON String that contains all the Patient Details
+	 * @throws JSONException 
+	 */
+	@GET
+	@Path("/getPatientsPatinentByFeild/{type}/{feild}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getPatientsPatinentByFeild(@PathParam("type")String type,@PathParam("feild")String feild) throws JSONException
+	{
+		
+		System.out.println("Dfefew");
+		
+		log.info("Entering the get Patients Guardians by given feild method");
+		try{
+		OutPatient patient =  new OutPatient();
+		patient = patientDBDriver.getPatientsPatinentByFeild(type,feild);
+		JSONSerializer jsonSerializer = new JSONSerializer();
+		return jsonSerializer.serialize(patient);
 		}
 		catch(RuntimeException e)
 		{

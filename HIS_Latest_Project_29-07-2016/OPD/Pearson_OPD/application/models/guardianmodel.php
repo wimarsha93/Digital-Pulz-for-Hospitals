@@ -68,7 +68,13 @@ class GuardianModel {
 		return $post_data;
 	}
 
-	
+	public function getGuardianByNIC($nic)
+	{
+		$service_url = SERVICE_BASE_URL."OutPatient/getPatientsGuardianByNIC/".$nic;
+		$curl_request = new ServiceCaller();
+		$response = $curl_request->curl_GET_Request($service_url);
+		return json_decode($response);
+	}
 	 
 }
 ?>

@@ -236,7 +236,7 @@
                     <td id="tdcivil"><?php echo $row->patientCivilStatus; ?></td>
                     <td id="tdnic"><?php echo $row->patientNIC; ?></td>
                     <td id="tdtel"><?php echo $row->patientTelephone; ?></td>
-                    <td id="tdaddr"><?php echo $row->patientAddress1; ?><?php echo $row->patientAddress2; ?><?php echo $row->patientAddress3; ?><?php echo $row->patientCity; ?></td>
+                    <td id="tdaddr"><?php echo $row->patientAddress; ?></td>
 
 <?php } ?>
 

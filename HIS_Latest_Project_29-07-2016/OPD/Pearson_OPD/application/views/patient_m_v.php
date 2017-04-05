@@ -66,6 +66,9 @@
             $('#guardianPostalCode').val("");
             $('#guardianMobile').val("");
             $('#guardianTelephone').val("");
+
+            $('#guardianGender').val("Male");
+            $('#guardianRelationship').val("Father");
     	});
 
     	// Find and remove selected table rows
@@ -87,6 +90,34 @@
             {
                 event.preventDefault();
             }
+        });
+
+        $("#btnGuardianSearch").click(function(){
+           $.ajax({
+                type: "GET",
+                url: '<?php echo base_url(); ?>index.php/patient_c/getGuardianByNIC/'+$('#guardianNIC').val(),
+                dataType: 'json',
+                success: function(output) {
+                    if(output!= null)
+                    {
+                        $('#guardianFirstname').val(output['firstName']);
+                        $('#guardianLastname').val(output['lastName']);
+                        $('#guardianAddress1').val(output['address1']);
+                        $('#guardianAddress2').val(output['address2']);
+                        $('#guardianAddress3').val(output['address3']);
+                        $('#guardianCity').val(output['city']);
+                        $('#guardianPostalCode').val(output['postalcode']);
+                        $('#guardianMobile').val(output['mobile']);
+                        $('#guardianTelephone').val(output['telephone']);
+
+
+                        $('#guardianGender').val(output['gender']);
+                        $('#guardianRelationship').val(output['relationship']);
+                        //select dropdown value
+                    }
+                    
+                }
+            });
         });
 
         //Check box toggle to enable and disable the add guardians
@@ -382,11 +413,11 @@ if (! preg_match ( '/Edit/', $title )) {
 							<div class="col-sm-12">
 								<div class="col-xs-12 col-sm-8">
 									<h2><?php
-	if ($pprofile->patientTitle == "Baby")
-		echo "$pprofile->patientTitle $pprofile->patientFullName";
-	else
-		echo "$pprofile->patientTitle $pprofile->patientFullName";
-	?> </h2>
+                                    	if ($pprofile->patientTitle == "Baby")
+                                    		echo "$pprofile->patientTitle $pprofile->patientFullName";
+                                    	else
+                                    		echo "$pprofile->patientTitle $pprofile->patientFullName";
+                                    	?> </h2>
 									<table>
 										<tr>
 											<td style="padding-right: 40px"><strong>HIN</strong></td>
@@ -464,10 +495,10 @@ if (preg_match ( '/Edit/', $title )) {
 
 				<!-- Message for operation status  ************************************************************** --> 
         <?php
-								if ($status != '0') {
-									echo "<div class='row'>	<div class='container'>	<div class='col-xs-12'>";
-									if (! preg_match ( '/Edit/', $title ) & $status == "True") {
-										?>
+			if ($status != '0') {
+				echo "<div class='row'>	<div class='container'>	<div class='col-xs-12'>";
+				if (! preg_match ( '/Edit/', $title ) & $status == "True") {
+					?>
                     <div class="alert alert-success"
 					style="margin-right: 5%">
 					<button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -745,14 +776,7 @@ if (preg_match ( '/Edit/', $title )) {
 						<div class="col-xs-3">
 							<div class="input-group">
 								<span class="input-group-addon">Passport</span><input
-									type="text" class="form-control" id="passport" name="passport" 
-                                    value="<?php
-                                    
-                                    if (preg_match ( '/Edit/', $title )) {
-                                        echo $pprofile->patientPassport;
-                                    }
-                                    ?>"
-                                    />
+									type="text" class="form-control" id="passport" name="passport" />
 							</div>
 
 						</div>
@@ -1052,7 +1076,7 @@ if (preg_match ( '/Edit/', $title )) {
 						<div class="col-xs-3">
 							<div class="input-group" >
 								<span class="input-group-addon" >Mobile</span><input
-									class="form-control" id="emergencyMobile" name="emergencyMobile"
+									class="form-control" id="emergencyMobile" name="emergencyMobile" pattern="\d{10}" 
 									value="<?php
 									
 									if (preg_match ( '/Edit/', $title )) {
@@ -1065,7 +1089,7 @@ if (preg_match ( '/Edit/', $title )) {
 						<div class="col-xs-3">
 							<div class="input-group" >
 								<span class="input-group-addon" >Telephone</span><input
-									class="form-control" id="emergencyTelephone" name="emergencyTelephone"
+									class="form-control" id="emergencyTelephone" name="emergencyTelephone" pattern="\d{10}" 
 									value="<?php
 									
 									if (preg_match ( '/Edit/', $title )) {
@@ -1081,7 +1105,7 @@ if (preg_match ( '/Edit/', $title )) {
 					<div class="row">
 						<div class="col-xs-3">
 							<div class="input-group" >
-								<span class="input-group-addon" >Address 1<span style="color:red">*</span></span><input
+								<span class="input-group-addon" >Address 1</span></span><input
 									class="form-control" id="emergencyaddress1" name="emergencyaddress1"
 									required="required"
 									value="<?php
@@ -1164,8 +1188,26 @@ if (preg_match ( '/Edit/', $title )) {
 					</div>
 					<br/>
 					<div class="row">
+                        <?php
+                                    
+                                    if (preg_match ( '/Edit/', $title )) {
 
-						<div class="col-xs-12" id='guardianList' hidden>
+                                        if(empty($pprofile->guardians))
+                                        {
+
+                                            echo "<div class='col-xs-12' id='guardianList' hidden>";
+                                        }
+                                        else
+                                        {
+                                            echo "<div class='col-xs-12' id='guardianList' >";
+                                        }
+                                    }
+                                    else
+                                    {
+                                        echo "<div class='col-xs-12' id='guardianList' hidden>";
+                                    }
+                        ?>
+						
 							<div class="box">
 								<div class="box-body">
 								
@@ -1193,7 +1235,24 @@ if (preg_match ( '/Edit/', $title )) {
 
 										</thead>
 										<tbody>
-				    
+				                             <?php if (preg_match ( '/Edit/', $title )) {
+                                                        foreach($pprofile->guardians as $row){ ?>
+                                                <tr>
+                                                    <td><input type="checkbox" name="record"></button></td>
+                                                    <td><input class="form-control" type="hidden" name="tableguardianNIC[]" value="<?php echo $row->guardianNIC ?>" /><?php echo $row->guardianNIC ?></td>
+                                                    <td><input class="form-control" type="hidden" name="tableguardianFirstname[]" value="<?php echo $row->firstName ?>" /><?php echo $row->firstName ?></td>
+                                                    <td><input class="form-control" type="hidden" name="tableguardianLastname[]" value="<?php echo $row->lastName ?>" /><?php echo $row->lastName ?></td>
+                                                    <td><input class="form-control" type="hidden" name="tableguardianGender[]" value="<?php echo $row->gender ?>" /><?php echo $row->gender ?></td>
+                                                    <td><input class="form-control" type="hidden" name="tableguardianRelationship[]" value="<?php echo $row->relationship ?>" /><?php echo $row->relationship ?></td>
+                                                    <td><input class="form-control" type="hidden" name="tableguardianAddress1[]" value="<?php echo $row->address1 ?>" /><?php echo $row->address1 ?></td>
+                                                    <td><input class="form-control" type="hidden" name="tableguardianAddress2[]" value="<?php echo $row->address2 ?>" /><?php echo $row->address2 ?></td>
+                                                    <td><input class="form-control" type="hidden" name="tableguardianAddress3[]" value="<?php echo $row->address3 ?>" /><?php echo $row->address3 ?></td>
+                                                    <td><input class="form-control" type="hidden" name="tableguardianCity[]" value="<?php echo $row->city ?>" /><?php echo $row->city ?></td>
+                                                    <td><input class="form-control" type="hidden" name="tableguardianPostalCode[]" value="<?php echo $row->postalcode ?>" /><?php echo $row->postalcode ?></td>
+                                                    <td><input class="form-control" type="hidden" name="tableguardianMobile[]" value="<?php echo $row->mobile ?>" /><?php echo $row->mobile ?></td>
+                                                    <td><input class="form-control" type="hidden" name="tableguardianTelephone[]" value="<?php echo $row->telephone ?>" /><?php echo $row->telephone ?></td>
+
+                                                <?php } }  ?>
 				    					</tbody>
 
 									</table>
@@ -1221,7 +1280,7 @@ if (preg_match ( '/Edit/', $title )) {
 											<div class="input-group" >
 												<span class="input-group-addon" >NIC <span style="color:red">*</span></span><input
 													class="form-control" id="guardianNIC" name="guardianNIC"
-													value=""/>
+													value="" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][vV]" />
 											</div>
 
 										</div>
@@ -1266,11 +1325,11 @@ if (preg_match ( '/Edit/', $title )) {
 												<span class="input-group-addon" >Relationship <span style="color:red">*</span></span> <select
 													class="form-control" id="guardianRelationship" name="guardianRelationship"
 													required="required">
-													<option class="" value="Male">Father</option>
-													<option class="" value="Female">Mother</option>
-													<option class="" value="Female">Uncle</option>
-													<option class="" value="Female">Aunt</option>
-													<option class="" value="Female">Other</option>
+													<option class="" value="Father">Father</option>
+													<option class="" value="Mother">Mother</option>
+													<option class="" value="Uncle">Uncle</option>
+													<option class="" value="Aunt">Aunt</option>
+													<option class="" value="Other">Other</option>
 												</select>
 											</div>
 
@@ -1331,7 +1390,7 @@ if (preg_match ( '/Edit/', $title )) {
                                             <div class="col-xs-3">
                                                 <div class="input-group" >
                                                     <span class="input-group-addon" >Mobile</span><input
-                                                        class="form-control" id="guardianMobile" name="guardianMobile"
+                                                        class="form-control" id="guardianMobile" name="guardianMobile" pattern="\d{10}" 
                                                         value="" />
                                                 </div>
 
@@ -1339,7 +1398,7 @@ if (preg_match ( '/Edit/', $title )) {
                                             <div class="col-xs-3">
                                                 <div class="input-group" >
                                                     <span class="input-group-addon" >Telephone</span><input
-                                                        class="form-control" id="guardianTelephone" name="guardianTelephone"
+                                                        class="form-control" id="guardianTelephone" name="guardianTelephone" pattern="\d{10}" 
                                                         value="" />
                                                 </div>
 

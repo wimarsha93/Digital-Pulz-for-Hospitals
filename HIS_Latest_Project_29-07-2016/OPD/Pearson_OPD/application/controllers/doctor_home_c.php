@@ -50,35 +50,42 @@ class doctor_home_c extends CI_Controller {
         $data['laborders'] = json_decode($this->laborder->getDoctorLabOrders($_SESSION['user']));
             //************************************************************************************
         $this->load->view('laborder_v', $data);
-    } else if ($visit_type == 5) {
+        } else if ($visit_type == 5) {
 
-            // get doc details
-        //$this->load->model('ServiceModel', 'service');
-        //$data['seldoc'] = json_decode($this->service->getDoctor($this->session->userdata('userid')));
+                // get doc details
+            //$this->load->model('ServiceModel', 'service');
+            //$data['seldoc'] = json_decode($this->service->getDoctor($this->session->userdata('userid')));
 
-        //$data['treatedpatients'] = json_decode($this->queue->getTreatedPatients($_SESSION['user']));
+            //$data['treatedpatients'] = json_decode($this->queue->getTreatedPatients($_SESSION['user']));
 
-        $this->load->model('PatientModel', 'patient');
-        $data['patients'] = json_decode($this->patient->getDoctorPatients($_SESSION['user'], $visit_type));
+            $this->load->model('PatientModel', 'patient');
+            $data['patients'] = json_decode($this->patient->getDoctorPatients($_SESSION['user'], 1));
 
-        //$data['qstatus'] = json_decode($this->queue->getQStatus($_SESSION['user']));
+            //$data['qstatus'] = json_decode($this->queue->getQStatus($_SESSION['user']));
 
-        //$data['qtype'] = json_decode($this->queue->getQType());
+            //$data['qtype'] = json_decode($this->queue->getQType());
 
 
-        $this->load->library('template');
-        $this->template->title('Dashboard');
-        $this->template
-        ->set_layout('panellayout') 
-        ->build('doctor_p_search_v',$data); 
+            $this->load->library('template');
+            $this->template->title('Dashboard');
+            $this->template
+            ->set_layout('panellayout') 
+            ->build('doctor_p_search_v',$data); 
 
-    } else if ($visit_type == 0) {
+        } else if ($visit_type == 0) {
 
-            //load doctor home  
+                //load doctor home  
+        }
+
+           //$this->load->view('bottom');
     }
 
-       //$this->load->view('bottom');
-}
+    public function searchBySearchType($searchType, $searchValue){
+        $this->load->model('PatientModel');
+        $result = $this->PatientModel->getGuardianByNIC($_SESSION['user'], 1, $searchType, $searchValue);
+
+        echo json_encode($result);
+    } 
 
 }
 

@@ -275,7 +275,7 @@
                                 <td id="tdhin"><?php echo $row->patientHIN; ?></td>
                                 <td id="tdpassport"><?php echo $row->patientPassport; ?></td>
                                 <td id="tdtel"><?php echo $row->patientTelephone; ?></td>
-                                <td id="tdaddr"><?php echo $row->patientAddress1; ?> <?php echo $row->patientAddress2; ?> <?php echo $row->patientAddress3; ?><?php echo $row->patientCity; ?></td>
+                                <td id="tdaddr"><?php echo $row->patientAddress; ?></td>
 
                             <?php } ?>
 

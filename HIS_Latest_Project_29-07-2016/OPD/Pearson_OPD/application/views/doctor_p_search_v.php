@@ -20,8 +20,8 @@
                     <div class="col-xs-3">
                         <select class="form-control " id="searchType" name="searchType">
                             <option value="HIN">HIN</option>
-                            <option value="HIN">NIC</option>
-                            <option value="HIN">Name</option>
+                            <option value="NIC">NIC</option>
+                            <option value="Name">Name</option>
                         </select>
                     </div>
                      <div class="col-xs-3">
@@ -56,7 +56,7 @@
             <br>
 
             <div class="row">
-                <div class="col-xs-12" id="patientDetailsList" hidden>
+                <div class="col-xs-12" id="patientDetailsList">
                     <div class="box">
                         <div class="box-body">
                             <table class="table table-bordered table-striped table-hover"
@@ -74,7 +74,17 @@
 
                                 </thead>
                                 <tbody>
-                                    
+                                    <?php $i=0; foreach($patients as $row){ ?>
+                                    <tr onClick=<?php $i++; echo "window.location='".base_url()."index.php/patient_overview_c/view/".$row->patient->patientID."'"; ?>>
+                                        <td><?php echo $i; ?></td>
+                                        <td><?php echo $row->patient->patientHIN; ?></td>
+                                        <td><?php   if($row->patient->patientTitle=="Baby" | $row->patient->patientTitle=="Rev") echo  $row->patient->patientTitle." ".$row->patient->patientFullName;else echo $row->patient->patientTitle.$row->patient->patientFullName; ?></td>
+                                        <td><?php echo date('Y-m-d H:i:s a',$row->visitDate/1000);  ?></td>
+                                        <td><?php echo  $row->visitComplaint ;  ?></td>
+
+                                        <td><?php echo (date('Y') - date('Y',strtotime($row->patient->patientDateOfBirth)))."Yrs / ". $row->patient->patientGender." / ".$row->patient->patientCivilStatus." / ".$row->patient->patientAddress1?></td>
+                                    </tr>
+                                    <?php }  ?>
                                 </tbody>
 
                             </table>
@@ -105,8 +115,25 @@
         $('#btnPatientSearch').click(function(){
 
             $('#patientDetailsList').prop('hidden', false);
-
+            $searchType = $('#searchType option:selected').val();
+            $searchValue = $('#txtSearch').val();
+            console.log($searchType +":"+$searchValue);
             //ajax method for search and filling the table
+            $.ajax({
+                type: "GET",
+                url: '<?php echo base_url(); ?>index.php/doctor_home_c/searchBySearchType/'+$searchType+"/"+$searchValue,
+                dataType: 'json',
+                success: function(output) {
+                    if(output!= null)
+                    {
+
+                        $('#tabletestp').empty();
+                        console.log(output);
+                        //select dropdown value
+                    }
+                    
+                }
+            });
 
         });
 

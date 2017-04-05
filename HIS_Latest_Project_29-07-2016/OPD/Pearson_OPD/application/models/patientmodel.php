@@ -180,6 +180,15 @@ class PatientModel {
 		return $response;
 	}
 
+	public function searchBySearchType($docid, $visit_type, $searchType, $searchValue)
+	{
+		$service_url = SERVICE_BASE_URL."OutPatient/getPatientOfDoctorBySearchType/".$docid."/".$visit_type."/".$searchType."/".$searchValue;
+		$curl_request = new ServiceCaller();
+		$response = $curl_request->curl_GET_Request($service_url);
+		return json_decode($response);
+	}
+
+
 	public function jsonSearializeGuardian($array)
 	{
 		$this->guardianlist[] = $array;

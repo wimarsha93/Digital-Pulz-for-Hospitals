@@ -146,7 +146,7 @@ tableRef.innerHTML = ""
 															<tr>
 																<td><strong>Address </strong></td>
 																<td style="padding-left: 10px">
-																	<?php echo "$pprofile->patientAddress" ;?>
+																	<?php echo "$pprofile->patientAddress1" ;?>, <?php echo "$pprofile->patientAddress2" ;?>, <?php echo "$pprofile->patientAddress3" ;?>, <?php echo "$pprofile->patientCity" ;?>, <?php echo "$pprofile->patientPostalCode" ;?>
 																</td>
 
 

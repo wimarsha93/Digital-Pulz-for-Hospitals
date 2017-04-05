@@ -68,7 +68,7 @@ session_start();
 				$this->load->model('PatientModel','patient');
 				$this->patient->set_pid( $pid );
 				$data['pprofile'] = json_decode( $this->patient->getPatient() );
-
+				
                 $this->load->view('patient_m_v',$data);
 
 				//****************************************************************************
@@ -153,12 +153,12 @@ session_start();
 					$this->patient->set_emergencyaddress2($this->input->post('emergencyaddress2'));
 					$this->patient->set_emergencyaddress3($this->input->post('emergencyaddress3'));
 					$this->patient->set_emergencycity($this->input->post('emergencycity'));
-
 					$this->patient->set_emergencypostalcode($this->input->post('emergencypostalCode'));
 
 					$this->patient->set_remarks($this->input->post('remarks'));
 					$this->patient->set_userid( $this->session->userdata("userid"));
-
+					$this->patient->set_active($this->input->post('1'));
+					
 					for($i = 0; $i< $this->input->post('gtablerows'); $i++)
     				{
     					$this->load->model('GuardianModel','guardian');
@@ -265,29 +265,30 @@ session_start();
 				$this->patient->set_emergencyaddress3($this->input->post('emergencyaddress3'));
 				$this->patient->set_emergencycity($this->input->post('emergencycity'));
 				$this->patient->set_emergencypostalcode($this->input->post('emergencypostalCode'));
-				$this->patient->set_active($this->input->post('active'));
+
 				$this->patient->set_remarks($this->input->post('remarks'));
 				$this->patient->set_userid( $this->session->userdata("userid"));
+				$this->patient->set_active($this->input->post('active'));
 
 				for($i = 0; $i< $this->input->post('gtablerows'); $i++)
 				{
 					$this->load->model('GuardianModel','guardian');
 
 
-    					$this->guardian->set_nic($this->input->post('tableguardianNIC')[$i]);
-						$this->guardian->set_fname($this->input->post('tableguardianFirstname')[$i]);
-						$this->guardian->set_lname($this->input->post('tableguardianLastname')[$i]);
-						$this->guardian->set_gender($this->input->post('tableguardianGender')[$i]);
-						$this->guardian->set_relationship($this->input->post('tableguardianRelationship')[$i]);
-						$this->guardian->set_address1($this->input->post('tableguardianAddress1')[$i]);
-						$this->guardian->set_address2($this->input->post('tableguardianAddress2')[$i]);
-						$this->guardian->set_address3($this->input->post('tableguardianAddress3')[$i]);
-						$this->guardian->set_city($this->input->post('tableguardianCity')[$i]);
-						$this->guardian->set_postalcode($this->input->post('tableguardianPostalCode')[$i]);	
-						$this->guardian->set_mobile($this->input->post('tableguardianMobile')[$i]);
-						$this->guardian->set_telephone($this->input->post('tableguardianTelephone')[$i]);
+					$this->guardian->set_nic($this->input->post('tableguardianNIC')[$i]);
+					$this->guardian->set_fname($this->input->post('tableguardianFirstname')[$i]);
+					$this->guardian->set_lname($this->input->post('tableguardianLastname')[$i]);
+					$this->guardian->set_gender($this->input->post('tableguardianGender')[$i]);
+					$this->guardian->set_relationship($this->input->post('tableguardianRelationship')[$i]);
+					$this->guardian->set_address1($this->input->post('tableguardianAddress1')[$i]);
+					$this->guardian->set_address2($this->input->post('tableguardianAddress2')[$i]);
+					$this->guardian->set_address3($this->input->post('tableguardianAddress3')[$i]);
+					$this->guardian->set_city($this->input->post('tableguardianCity')[$i]);
+					$this->guardian->set_postalcode($this->input->post('tableguardianPostalCode')[$i]);	
+					$this->guardian->set_mobile($this->input->post('tableguardianMobile')[$i]);
+					$this->guardian->set_telephone($this->input->post('tableguardianTelephone')[$i]);
 
-    					$this->patient->jsonSearializeGuardian($this->guardian->jsonSerialize());
+					$this->patient->jsonSearializeGuardian($this->guardian->jsonSerialize());
 				}
  
 				$data['status'] = $this->patient->updatePatient();
@@ -323,6 +324,14 @@ session_start();
 			} 
 
 			
+			public function getGuardianByNIC($nic)
+			{
+				$this->load->model('guardianmodel');
+				$result = $this->guardianmodel->getGuardianByNIC($nic);
+
+				echo json_encode($result);
+
+			}
 			
         }
 ?>

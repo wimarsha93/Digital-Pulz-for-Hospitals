@@ -40,7 +40,7 @@
 								<td><?php echo date('Y-m-d H:i:s a',$row->visitDate/1000);  ?></td>
 								<td><?php echo  $row->visitComplaint ;  ?></td>
 
-								<td><?php echo (date('Y') - date('Y',strtotime($row->patient->patientDateOfBirth)))."Yrs / ". $row->patient->patientGender." / ".$row->patient->patientCivilStatus." / ".$row->patient->patientAddress ?></td>
+								<td><?php echo (date('Y') - date('Y',strtotime($row->patient->patientDateOfBirth)))."Yrs / ". $row->patient->patientGender." / ".$row->patient->patientCivilStatus." / ".$row->patient->patientAddress1?></td>
 							</tr>
           <?php }  ?>
     </tbody>

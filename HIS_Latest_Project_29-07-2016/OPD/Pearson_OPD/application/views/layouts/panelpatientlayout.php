@@ -60,7 +60,7 @@
                    
 
 </head>
-<body class="skin-blue" onload="myFunction()" >
+<body class="skin-blue" >
 
     <div class="wrapper">
 

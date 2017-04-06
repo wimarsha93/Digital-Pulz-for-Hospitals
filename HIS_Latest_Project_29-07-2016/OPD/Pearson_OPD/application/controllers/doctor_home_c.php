@@ -81,10 +81,26 @@ class doctor_home_c extends CI_Controller {
     }
 
     public function searchBySearchType($searchType, $searchValue){
-        $this->load->model('PatientModel');
-        $result = $this->PatientModel->getGuardianByNIC($_SESSION['user'], 1, $searchType, $searchValue);
 
-        echo json_encode($result);
+        $this->load->model('PatientModel', 'patient');
+        $result = $this->patient->searchBySearchType($_SESSION['user'], 1, $searchType, $searchValue);
+        $data['patients'] = json_decode($result);
+        $data['title'] = "Doctor Home";
+        // load queue belongs to this doctor.  
+        
+        //************************************************************************************
+        $data['status'] = '0';
+        $data['leftnavpage'] = '';
+
+        // loading left side navigation
+
+        $data['visit_type'] = 1;
+
+        $this->load->library('template');
+            $this->template->title('Dashboard');
+            $this->template
+            ->set_layout('panellayout') 
+            ->build('doctor_p_search_v',$data); 
     } 
 
 }

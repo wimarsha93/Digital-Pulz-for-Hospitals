@@ -19,6 +19,7 @@
 
     $(document).ready(function() {
 
+        $('#gtablerows').val($('#tableGuardians tbody tr').length);
     	//add guardians to the temp table
     	$('#btnGuardianAdd').click(function(){
     		$('#guardianList').prop('hidden', false);
@@ -83,6 +84,7 @@
             {
             	$('#guardianList').prop('hidden', true);
             }
+            $('#gtablerows').val($('#tableGuardians tbody tr').length);
         });
 
         $("#fullname").keypress(function(event) {
@@ -113,7 +115,6 @@
 
                         $('#guardianGender').val(output['gender']);
                         $('#guardianRelationship').val(output['relationship']);
-                        //select dropdown value
                     }
                     
                 }
@@ -786,7 +787,7 @@ if (preg_match ( '/Edit/', $title )) {
 								<span class="input-group-addon" >Citizenship <span style="color:red">*</span></span><input
 									type="text" class="form-control" pattern="[A-Z a-z]+"
 									id="citizen" name="citizen"
-									value=" <?php
+									value="<?php
 								
 									if (preg_match ( '/Edit/', $title )) {
 										echo $pprofile->patientCitizenship;

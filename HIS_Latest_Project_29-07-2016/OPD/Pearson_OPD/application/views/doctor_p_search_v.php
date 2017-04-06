@@ -28,7 +28,8 @@
                         <input type="text" class="form-control" id="txtSearch" name="text search" placeholder="Search" />
                     </div>
                     <div class="col-xs-3">
-                        <button type="button" id="btnPatientSearch" class="btn btn-primary">Search</button>
+                        <button type="button" id="btnPatientSearch" class="btn btn-primary" onclick="loadSearch()">Search</button>
+                        <button type="button" id="btnPatientClear" class="btn btn-primary" onclick="clearSearch()">Clear</button>
                     </div>
                     <div class="col-xs-3">
                         <button type="button" id="btnPatientCreate" class="btn btn-primary" onclick="location.href = '<?php echo site_url("/patient_c/add"); ?>'">Register New Patient
@@ -111,12 +112,19 @@
 <script src="<?= base_url('/Bootstrap/js/jquery-1.9.1.min.js'); ?>"></script>
 <script>
 
-    $(document).ready(function() {
+    /*$(document).ready(function() {
         $('#btnPatientSearch').click(function(){
+
+
 
             $('#patientDetailsList').prop('hidden', false);
             $searchType = $('#searchType option:selected').val();
             $searchValue = $('#txtSearch').val();
+
+            var table = $('#tabletestp').DataTable();
+            table.fnClearTable();
+            table.fnDraw();
+            table.fnDestroy();
             console.log($searchType +":"+$searchValue);
             //ajax method for search and filling the table
             $.ajax({
@@ -124,11 +132,26 @@
                 url: '<?php echo base_url(); ?>index.php/doctor_home_c/searchBySearchType/'+$searchType+"/"+$searchValue,
                 dataType: 'json',
                 success: function(output) {
+                    console.log(output);
                     if(output!= null)
                     {
+                        //$('#tabletestp').empty();
+                        $visitData = "";
+                        $i=0;
+                        $.each( output, function( key, value ) {
+                            $i++;
+                            $visitData += '<tr>'+
+                                        '<td>'+$i;+'</td>'+
+                                        '<td>'+value['patient']['patientHIN']+'</td>'+
+                                        '<td></td>'+
+                                        '<td></td>'+
+                                        '<td></td>'+
 
-                        $('#tabletestp').empty();
-                        console.log(output);
+                                        '<td></td>'+
+                                    '</tr>'
+                        });
+                        $('#tabletestp tbody').append($visitData);
+                        
                         //select dropdown value
                     }
                     
@@ -137,8 +160,19 @@
 
         });
 
+    });*/
 
-    });
+
+    function loadSearch() {
+            $searchType = $('#searchType option:selected').val();
+            $searchValue = $('#txtSearch').val();
+
+            window.location =  "<?php echo base_url();?>index.php/doctor_home_c/searchBySearchType/"+$searchType+"/"+$searchValue;
+    }
+
+    function clearSearch() {
+            window.location =  "<?php echo base_url();?>index.php/doctor_home_c/view/5";
+    }
     
 </script>
 

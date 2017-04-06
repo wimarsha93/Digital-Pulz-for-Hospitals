@@ -163,7 +163,7 @@ public class PatientDBDriver {
 			
 			Object result = (Integer) patient.getPatientID();
 			tx.commit();
-			this.insertGuardiansForPatient(result,array);
+			this.UpdateGuardiansForPatient(result,array);
 			//cpsDBDriver.sendUpdatedPatientObjToCPS(patient,dob);
 			return true;
 		} catch (Exception ex) {
@@ -640,5 +640,121 @@ public class PatientDBDriver {
 	}
 
 	
+	public boolean UpdateGuardiansForPatient(Object patient_id, JSONArray array) {
+		// TODO Auto-generated method stub
 
+		Transaction tx = null;
+		Transaction tx1 = null;
+		try {
+			
+		    int Pid = Integer.valueOf(patient_id.toString());
+
+			
+			OutPatient patient = (OutPatient) session.get(OutPatient.class,
+					Pid);
+			
+		    this.deleteGuardians(Pid);
+		    session.clear();
+		    
+		    tx = session.beginTransaction();
+			System.out.println(array.length());
+			
+			
+			for (int i = 0; i < array.length(); i++) {
+				GuardianForPatient guardian = new GuardianForPatient();
+				
+				JSONObject obj = array.getJSONObject(i);
+				guardian.setGuardianNIC(obj.getString("guardiannic"));
+				guardian.setFirstName(obj.getString("guardianfname"));
+				guardian.setLastName(obj.getString("guardianlname"));
+				guardian.setGender(obj.getString("guardiangender"));
+				guardian.setRelationship(obj.getString("guardianrelationship"));
+				guardian.setAddress1(obj.getString("guardianaddress1"));
+				guardian.setAddress2(obj.getString("guardianaddress2"));
+				guardian.setAddress3(obj.getString("guardianaddress3"));
+				guardian.setCity(obj.getString("guardiancity"));
+				guardian.setPostalcode(obj.getString("guardianpostalcode"));
+				guardian.setMobile(obj.getString("guardianmobile"));
+				guardian.setTelephone(obj.getString("guardiantelephone"));
+				guardian.setPatient(patient);
+				
+
+				session.save(guardian);
+				guardian = null;
+				tx.commit();
+				tx = session.beginTransaction();
+			
+			}
+			
+			return true;
+		} 
+		
+		catch (RuntimeException ex) {
+			if (tx != null && tx.isActive()) {
+				try {
+					tx.rollback();
+					System.out.print(ex.getMessage());
+				} catch (HibernateException he) {
+					System.err.println("Error rolling back transaction");
+				}
+				throw ex;
+			}
+			else if(tx == null)
+			{
+				throw ex;
+			}
+			else
+			{
+				return false;
+			}
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());
+		}
+		return false;
+
+	}
+
+	private boolean deleteGuardians(int patient_id) {
+		
+		
+		Transaction tx = null;
+		try {
+			
+
+			if(!session.isOpen())
+				session = SessionFactoryUtil.getSessionFactory().openSession();
+
+			tx = session.beginTransaction();
+			OutPatient patient=(OutPatient) session.get(OutPatient.class, patient_id);
+		   
+			Query query = session.createQuery("delete GuardianForPatient where patient=:p");
+			query.setParameter("p", patient);
+			query.executeUpdate();
+			tx.commit();
+			return true;
+		// TODO Auto-generated method stub
+		
+		
+		}catch (RuntimeException ex) {
+			if (tx != null && tx.isActive()) {
+				try {
+					tx.rollback();
+				} catch (HibernateException he) {
+					System.err.println("Error rolling back transaction");
+				}
+				throw ex;
+			}
+			else if(tx == null)
+			{
+				throw ex;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		
+		
+	}
 }

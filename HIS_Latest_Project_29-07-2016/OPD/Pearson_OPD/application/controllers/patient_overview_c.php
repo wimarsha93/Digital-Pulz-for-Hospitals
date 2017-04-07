@@ -35,6 +35,8 @@ class patient_overview_c extends CI_Controller {
         $this->load->model('QueueModel', 'queue');
         $data['onq'] = json_decode($this->queue->isPatientInQueue($pid));
 
+
+        
         //**********************************************************
         // if the doctor is viewing a patient and its not the current IN patient and hes on the queue
         // then ask to checkout the old patient and checkin the new one
@@ -70,6 +72,8 @@ class patient_overview_c extends CI_Controller {
     //    $this->load->view('left_navbar_v', $data);
         //************************************************************************************
         // show the patient profile on the top patient profile
+
+
         $this->load->model('PatientModel', 'patient');
         $this->patient->set_pid($pid);
         $data['pprofile'] = json_decode($this->patient->getPatient());
@@ -106,7 +110,9 @@ class patient_overview_c extends CI_Controller {
        // $data['laborders'] = json_decode($this->laborderm->getVisitLabOrders($vid));
         $data['labs'] = json_decode($this->laborderm->getVisitLabOrdersByPid($pid));
 
-
+        $this->load->model('VisitModel','visitm');
+        $this->visitm->set_pid($pid);
+        $data['recentvisit'] = json_decode($this->visitm->getRecentVisitID());
         
         $this->template
         ->set_layout('panellayout')

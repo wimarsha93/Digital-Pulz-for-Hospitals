@@ -437,9 +437,9 @@
 									<button class="btn btn-box-tool" data-widget="collapse" onclick="disabledpop()" ><i class="fa fa-plus"></i></button>
 									
 								</div><!-- /.box-tools -->		
-							<?php $x= 0 ;?>
+								<?php $x= 0 ;?>
 
-								<?php $l=0; sort($visits); if ($visits != NULL) foreach ($visits as $row) { ?>
+									<?php $l=0; sort($visits); if ($visits != NULL) foreach ($visits as $row) { ?>
 										
 											<?php  ++$l; 
 
@@ -467,7 +467,10 @@
 
 
 							<div class="box-body">
-								<table class="table table-bordered table-striped table-hover"
+								<div align="left">
+									<button type="button" onclick="location.href='<?php echo site_url('/visit_c/add/'.$pid); ?>'" class="btn btn-primary"><b>Add Visits  </b><i class="fa fa-plus" aria-hidden="true"></i></button>
+								</div>
+								<table class="table myvisit table-bordered table-striped table-hover"
 								id="tabletestp_1">
 								<br>
 								<thead>
@@ -548,6 +551,9 @@
 									
 								</div><!-- /.box-header -->
 								<div class="box-body">
+									<div align="left">
+										<button type="button" onclick="location.href='<?php echo site_url("/allergies_c/add/".$pid."/0"); ?>'" class="btn btn-primary"><b>Add Allergies  </b><i class="fa fa-plus" aria-hidden="true"></i></button>
+									</div>
 									<table class="table table-bordered table-striped table-hover"
 									id="tabletestp">
 									<br>
@@ -631,6 +637,9 @@
 		
 
 		<div class="box-body">
+			<div align="left">
+				<button type="button" onclick="location.href='<?php echo site_url("/Lab/newtestrequest/index/"); ?>'" class="btn btn-primary"><b>Add Lab Orders  </b><i class="fa fa-plus" aria-hidden="true"></i></button>
+			</div>
 			<table class="table table-bordered table-striped table-hover"
 			id="tabletestp_6">
 			<br>
@@ -708,6 +717,9 @@
 				<!-- <span class="badge badge-notify pull-right" style="background:#2ECC40">1</span> -->
 			</div><!-- /.box-header -->
 			<div class="box-body">
+			<div align="left">
+				<button type="button" onclick="location.href='<?php echo site_url("/exams_c/add/".$pid."/".$recentvisit[0]->visitID); ?>'" class="btn btn-primary"><b>Add Examinations  </b><i class="fa fa-plus" aria-hidden="true"></i></button>
+			</div>
 				<table class="table table-bordered table-striped table-hover"
 				id="tabletestp_4">
 				<br>
@@ -789,6 +801,9 @@
 
 					</div><!-- /.box-header -->
 					<div class="box-body">
+					<div align="left">
+						<button type="button" onclick="location.href='<?php echo site_url("/history_c/add/".$pid."/0");?>'" class="btn btn-primary"><b>Add Notes  </b><i class="fa fa-plus" aria-hidden="true"></i></button>
+					</div>
 						<table class="table table-bordered table-striped table-hover"
 						id="tabletestp_3">
 						<br>
@@ -1041,6 +1056,9 @@
 
 		</div><!-- /.box-header -->
 		<div class="box-body">
+			<div align="left">
+				<button type="button" onclick="location.href='<?php echo site_url("/attachment_c/add/".$pid."/0"); ?>'" class="btn btn-primary"><b>Add Attachments  </b><i class="fa fa-plus" aria-hidden="true"></i></button>
+			</div>
 			<table class="table table-bordered table-striped table-hover"
 			id="tabletestp_4">
 			<br>

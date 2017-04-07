@@ -385,7 +385,9 @@
                 "bSort": true,
                 "bInfo": true,
                 "bAutoWidth": true
+		       
             });
+            
            // $( "#patientview" ).hide();
         });
     </script>
